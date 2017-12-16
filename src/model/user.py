@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from . import db
-from .authorization import UserAuth
 
 
 class User(db.Model):
