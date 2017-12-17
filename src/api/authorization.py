@@ -42,7 +42,7 @@ def handle_auth(user):
 
 @jwt.identity_handler
 def identity(payload):
-    return str(payload["user_id"])
+    return payload["user_id"]
 
 
 @jwt.jwt_payload_handler

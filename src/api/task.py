@@ -9,14 +9,16 @@ blueprint = flask.Blueprint("tasks", __name__)
 
 
 @blueprint.route("/", methods=["GET"])
-def get_tasks(offset=0, limit=20):
+def get_tasks():
+    offset = 0
+    limit = 20
     res = model.task.Task.query.paginate(offset, limit, False)
     return flask.jsonify(data=render.task.many_to_dict(res.items))
 
 
-@blueprint.route("/<int:user_id>", methods=["GET"])
-def get_user(user_id):
-    res = model.task.Task.query.get(user_id)
+@blueprint.route("/<int:task_id>", methods=["GET"])
+def get_user(task_id):
+    res = model.task.Task.query.get(task_id)
     if not res:
         return "User not found", 404
     return flask.jsonify(data=render.task.to_dict(res))

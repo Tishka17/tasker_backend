@@ -24,3 +24,6 @@ print(resp.content.decode("utf-8"))
 
 resp = session.get(BASE_URL + "/users/self")
 print(resp.content.decode("utf-8"))
+
+resp = session.get(BASE_URL + "/users/self/tasks")
+print(resp.content.decode("utf-8"))

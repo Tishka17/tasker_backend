@@ -21,11 +21,22 @@ def get_users(offset=0, limit=20):
 @jwt_required()
 def get_user(user_id=None):
     if user_id is None:
-        user_id = current_identity
-    print("user id =", user_id)
+        user_id = int(current_identity)
+    print("user", type(user_id), user_id)
     res = model.user.User.query.get(user_id)
     print(res)
     if not res:
         return "User not found", 404
     return flask.jsonify(data=render.user.to_dict(res))
 
+
+@blueprint.route("/<int:user_id>/tasks", methods=["GET"])
+@blueprint.route("/self/tasks", methods=["GET"])
+@jwt_required()
+def get_user_tasks(user_id=None):
+    offset = 0
+    limit = 20
+    if user_id is None:
+        user_id = int(current_identity)
+    res = model.task.Task.query.filter_by(owner_id=user_id).paginate(offset, limit, False)
+    return flask.jsonify(data=render.task.many_to_dict(res.items))
