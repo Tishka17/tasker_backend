@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from sqlalchemy.orm import backref
 
 from . import db
+from .user import User
 
 
 class Subscription(db.Model):
@@ -10,7 +12,7 @@ class Subscription(db.Model):
     )
 
     from_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    from_user = db.relationship('User', backref="subscriptions_to")
+    from_user = db.relationship(User, backref=backref("subscriptions_to", cascade="all,delete"))
     to_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    to_user = db.relationship('User', backref="subscriptions_from")
+    to_user = db.relationship(User, backref=backref("subscriptions_from", cascade="all,delete"))
     approved = db.Column(db.Boolean, nullable=False)

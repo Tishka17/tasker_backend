@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 import enum
 
+from sqlalchemy.orm import backref
+
 from . import db
 from . import visibility
+from .user import User
 
 
 @enum.unique
@@ -24,7 +27,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     creation_date = db.Column(db.DateTime, default=db.func.now(), nullable=False)
-    owner = db.relationship('User', backref='tasks')
+    owner = db.relationship(User, backref=backref('tasks', cascade="all,delete"))
     modification_date = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now(), nullable=False)
     deadline = db.Column(db.DateTime)
     title = db.Column(db.String(128))
