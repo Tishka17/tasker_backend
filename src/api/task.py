@@ -8,6 +8,7 @@ import model
 import model.task
 import converters.task
 import converters.datetime
+import operations.task
 
 blueprint = flask.Blueprint("tasks", __name__)
 
@@ -47,12 +48,7 @@ def update_task(task_id):
     if not orig:
         return "Task not found", 404
     new = converters.task.from_dict(flask.request.json)
-    orig.title = new.title
-    orig.description = new.title
-    orig.deadline = new.deadline
-    orig.priority = new.priority
-    orig.subscribers_visibility = new.subscribers_visibility
-    orig.public_visibility = new.public_visibility
+    operations.task.update(orig, new)
     model.db.session.commit()
     return flask.jsonify(data=converters.task.to_dict(orig))
 
@@ -76,7 +72,7 @@ def start(task_id):
         return "Task not found", 404
     if not orig.owner_id == int(current_identity):
         return "Access denied", 403
-    orig.state = model.task.State.started
+    operations.task.start(orig)
     model.db.session.commit()
     return flask.jsonify(data=converters.task.to_dict(orig))
 
@@ -89,7 +85,7 @@ def pause(task_id):
         return "Task not found", 404
     if not orig.owner_id == int(current_identity):
         return "Access denied", 403
-    orig.state = model.task.State.paused
+    operations.task.pause(orig)
     model.db.session.commit()
     return flask.jsonify(data=converters.task.to_dict(orig))
 
@@ -102,6 +98,6 @@ def finish(task_id):
         return "Task not found", 404
     if not orig.owner_id == int(current_identity):
         return "Access denied", 403
-    orig.state = model.task.State.finished
+    operations.task.finish(orig)
     model.db.session.commit()
     return flask.jsonify(data=converters.task.to_dict(orig))
