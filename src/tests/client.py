@@ -42,7 +42,13 @@ resp = session.put(BASE_URL + "/tasks/%s" % task_id, json={
     "subscribers_visibility": "presence_only",
     "public_visibility": "invisible",
 })
-json = resp.json()
+print(resp.json())
+
+resp = session.put(BASE_URL + "/tasks/%s/start" % task_id)
+print(resp.json())
+resp = session.put(BASE_URL + "/tasks/%s/pause" % task_id)
+print(resp.json())
+resp = session.put(BASE_URL + "/tasks/%s/finish" % task_id)
 print(resp.json())
 
 resp = session.get(BASE_URL + "/users/self/tasks")

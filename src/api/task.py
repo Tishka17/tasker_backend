@@ -66,3 +66,42 @@ def delete_task(task_id):
     model.db.session.delete(orig)
     model.db.session.commit()
     return flask.jsonify(data={})
+
+
+@blueprint.route("/<int:task_id>/start", methods=["PUT"])
+@jwt_required()
+def start(task_id):
+    orig = model.task.Task.query.get(task_id)
+    if not orig:
+        return "Task not found", 404
+    if not orig.owner_id == int(current_identity):
+        return "Access denied", 403
+    orig.state = model.task.State.started
+    model.db.session.commit()
+    return flask.jsonify(data=converters.task.to_dict(orig))
+
+
+@blueprint.route("/<int:task_id>/pause", methods=["PUT"])
+@jwt_required()
+def pause(task_id):
+    orig = model.task.Task.query.get(task_id)
+    if not orig:
+        return "Task not found", 404
+    if not orig.owner_id == int(current_identity):
+        return "Access denied", 403
+    orig.state = model.task.State.paused
+    model.db.session.commit()
+    return flask.jsonify(data=converters.task.to_dict(orig))
+
+
+@blueprint.route("/<int:task_id>/finish", methods=["PUT"])
+@jwt_required()
+def finish(task_id):
+    orig = model.task.Task.query.get(task_id)
+    if not orig:
+        return "Task not found", 404
+    if not orig.owner_id == int(current_identity):
+        return "Access denied", 403
+    orig.state = model.task.State.finished
+    model.db.session.commit()
+    return flask.jsonify(data=converters.task.to_dict(orig))

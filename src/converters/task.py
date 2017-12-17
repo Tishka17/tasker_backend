@@ -17,10 +17,12 @@ def to_dict(task: model.task.Task) -> dict:
         "title": task.title,
         "description": task.description,
         "priority": task.priority,
+        "state": task.state,
         "percent_progress": task.percent_progress,
         "public_visibility": task.public_visibility,
         "subscribers_visibility": task.subscribers_visibility,
     }
+
 
 def from_dict(data):
     return model.task.Task(
@@ -31,6 +33,7 @@ def from_dict(data):
         public_visibility=data.get("public_visibility"),
         subscribers_visibility=data.get("subscribers_visibility")
     )
+
 
 def many_to_dict(tasks: typing.Iterable[model.task.Task]) -> typing.Generator[dict, None, None]:
     return (to_dict(tasks) for tasks in tasks)
