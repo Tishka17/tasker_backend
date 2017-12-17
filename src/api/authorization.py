@@ -6,7 +6,7 @@ import flask_jwt
 import flask
 
 import model.user
-import render.user
+import converters.user
 
 jwt = flask_jwt.JWT()
 blueprint = flask.Blueprint("authorization", __name__)

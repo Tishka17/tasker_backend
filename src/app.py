@@ -8,7 +8,7 @@ import api.user
 import api.task
 import api.authorization
 
-import render.json_encoder
+import converters.json_encoder
 
 DEBUG = True  # FIXME remove in production
 
@@ -18,7 +18,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SECRET_KEY'] = 'super-secret'  # FIXME generate on first start
 app.config['JWT_AUTH_URL_RULE'] = None
-app.json_encoder = render.json_encoder.CustomJSONEncoder
+app.json_encoder = converters.json_encoder.CustomJSONEncoder
 
 model.db.init_app(app)
 model.db.app = app

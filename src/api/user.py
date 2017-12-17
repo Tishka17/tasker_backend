@@ -4,7 +4,7 @@ import flask
 from flask_jwt import jwt_required, current_identity
 
 import model.user
-import render.user
+import converters.user
 
 blueprint = flask.Blueprint("users", __name__)
 
@@ -13,7 +13,7 @@ blueprint = flask.Blueprint("users", __name__)
 @jwt_required()
 def get_users(offset=0, limit=20):
     res = model.user.User.query.paginate(offset, limit, False)
-    return flask.jsonify(data=render.user.many_to_dict(res.items))
+    return flask.jsonify(data=converters.user.many_to_dict(res.items))
 
 
 @blueprint.route("/<int:user_id>", methods=["GET"])
@@ -27,7 +27,7 @@ def get_user(user_id=None):
     print(res)
     if not res:
         return "User not found", 404
-    return flask.jsonify(data=render.user.to_dict(res))
+    return flask.jsonify(data=converters.user.to_dict(res))
 
 
 @blueprint.route("/<int:user_id>/tasks", methods=["GET"])
@@ -39,4 +39,4 @@ def get_user_tasks(user_id=None):
     if user_id is None:
         user_id = int(current_identity)
     res = model.task.Task.query.filter_by(owner_id=user_id).paginate(offset, limit, False)
-    return flask.jsonify(data=render.task.many_to_dict(res.items))
+    return flask.jsonify(data=converters.task.many_to_dict(res.items))
