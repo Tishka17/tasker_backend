@@ -20,8 +20,7 @@ def login():
     if user \
             and user.authorization \
             and werkzeug.security.check_password_hash(user.authorization.password_hash, password):
-        handle_auth(user)
-        return flask.jsonify(data=render.user.to_dict(user))
+        return handle_auth(user)
     else:
         raise flask_jwt.JWTError('Bad Request', 'Invalid credentials')
 
@@ -43,8 +42,7 @@ def handle_auth(user):
 
 @jwt.identity_handler
 def identity(payload):
-    user_id = payload["identity"]
-    return model.user.User.query.get(user_id)
+    return str(payload["user_id"])
 
 
 @jwt.jwt_payload_handler
