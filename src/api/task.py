@@ -53,6 +53,7 @@ def update_task(task_id):
     orig.priority = new.priority
     orig.subscribers_visibility = new.subscribers_visibility
     orig.public_visibility = new.public_visibility
+    model.db.session.commit()
     return flask.jsonify(data=converters.task.to_dict(orig))
 
 
