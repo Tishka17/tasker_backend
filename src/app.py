@@ -5,6 +5,7 @@ import model
 import init
 
 import api.user
+import api.task
 import api.authorization
 
 import render.json_encoder
@@ -28,6 +29,7 @@ api.authorization.jwt.app = app
 init.deploy(app)
 
 app.register_blueprint(api.user.blueprint, url_prefix="/api/v1/users")
+app.register_blueprint(api.task.blueprint, url_prefix="/api/v1/tasks")
 app.register_blueprint(api.authorization.blueprint, url_prefix="/api/v1/auth")
 
 if __name__ == "__main__":

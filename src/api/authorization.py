@@ -13,7 +13,7 @@ blueprint = flask.Blueprint("authorization", __name__)
 
 
 @blueprint.route("/login", methods=["POST"])
-def auth():
+def login():
     login = flask.request.form["login"]
     password = flask.request.form["password"]
     user = model.user.User.query.filter_by(login=login).one_or_none()
@@ -24,6 +24,11 @@ def auth():
         return flask.jsonify(data=render.user.to_dict(user))
     else:
         raise flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+
+
+@blueprint.route("/vk", methods=["POST"])
+def vk():
+    pass
 
 
 def handle_auth(user):

@@ -10,8 +10,8 @@ blueprint = flask.Blueprint("users", __name__)
 
 @blueprint.route("/", methods=["GET"])
 def get_users(offset=0, limit=20):
-    res = model.user.User.query.offset(offset).limit(limit).all()
-    return flask.jsonify(data=render.user.many_to_dict(res))
+    res = model.user.User.query.paginate(offset, limit, False)
+    return flask.jsonify(data=render.user.many_to_dict(res.items))
 
 
 @blueprint.route("/<int:user_id>", methods=["GET"])

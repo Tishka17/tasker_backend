@@ -25,10 +25,11 @@ class State(enum.Enum):
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     creation_date = db.Column(db.DateTime, default=db.func.now(), nullable=False)
-    owner = db.relationship(User, backref=backref('tasks', cascade="all,delete"))
     modification_date = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now(), nullable=False)
+
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    owner = db.relationship(User, backref=backref('tasks', cascade="all,delete"))
     deadline = db.Column(db.DateTime)
     title = db.Column(db.String(128))
     description = db.Column(db.String(1024))
