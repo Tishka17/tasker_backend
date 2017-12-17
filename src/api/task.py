@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import flask
+from flask_jwt import jwt_required
 
 import model.task
 import render.task
@@ -9,6 +10,7 @@ blueprint = flask.Blueprint("tasks", __name__)
 
 
 @blueprint.route("/", methods=["GET"])
+@jwt_required()
 def get_tasks():
     offset = 0
     limit = 20
@@ -17,6 +19,7 @@ def get_tasks():
 
 
 @blueprint.route("/<int:task_id>", methods=["GET"])
+@jwt_required()
 def get_user(task_id):
     res = model.task.Task.query.get(task_id)
     if not res:
