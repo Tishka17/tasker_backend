@@ -20,8 +20,9 @@ def get_tasks():
 
 @blueprint.route("/<int:task_id>", methods=["GET"])
 @jwt_required()
-def get_user(task_id):
+def get_task(task_id):
     res = model.task.Task.query.get(task_id)
     if not res:
-        return "User not found", 404
+        return "Task not found", 404
     return flask.jsonify(data=render.task.to_dict(res))
+
