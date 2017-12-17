@@ -15,16 +15,8 @@ blueprint = flask.Blueprint("tasks", __name__)
 @blueprint.route("/", methods=["POST"])
 @jwt_required()
 def new_task():
-    data = flask.request.json
-    task = model.task.Task(
-        title=data.get("title"),
-        description=data.get("description"),
-        deadline=converters.datetime.from_str(data.get("deadline")),
-        priority=data.get("priority"),
-        owner_id=int(current_identity),
-        public_visibility=data.get("public_visibility"),
-        subscribers_visibility=data.get("subscribers_visibility")
-    )
+    task = converters.task.from_dict(flask.request.json)
+    task.owner_id = int(current_identity)
     model.db.session.add(task)
     model.db.session.commit()
     return flask.jsonify(data=converters.task.to_dict(task))
@@ -46,3 +38,30 @@ def get_task(task_id):
     if not res:
         return "Task not found", 404
     return flask.jsonify(data=converters.task.to_dict(res))
+
+
+@blueprint.route("/<int:task_id>", methods=["PUT"])
+@jwt_required()
+def update_task(task_id):
+    orig = model.task.Task.query.get(task_id)
+    if not orig:
+        return "Task not found", 404
+    new = converters.task.from_dict(flask.request.json)
+    orig.title = new.title
+    orig.description = new.title
+    orig.deadline = new.deadline
+    orig.priority = new.priority
+    orig.subscribers_visibility = new.subscribers_visibility
+    orig.public_visibility = new.public_visibility
+    return flask.jsonify(data=converters.task.to_dict(orig))
+
+
+@blueprint.route("/<int:task_id>", methods=["DELETE"])
+@jwt_required()
+def delete_task(task_id):
+    orig = model.task.Task.query.get(task_id)
+    if not orig:
+        return "Task not found", 404
+    model.db.session.delete(orig)
+    model.db.session.commit()
+    return flask.jsonify(data={})

@@ -1,5 +1,4 @@
 import requests
-import json
 import os
 
 SERVER = "http://127.0.0.1:5000"
@@ -24,12 +23,16 @@ print(resp.content.decode("utf-8"))
 resp = session.get(BASE_URL + "/users/self/tasks")
 print(resp.content.decode("utf-8"))
 
-# resp = session.post(BASE_URL + "/tasks/", json={
-#     "title": "Some Title",
-#     "description": "Some Desc",
-#     "prority": "high",
-#     "deadline": "2017-12-17T11:01:55",
-#     "subscribers_visibility": "title_only",
-#     "public_visibility": "presence_only",
-# })
-# print(resp.json())
+resp = session.post(BASE_URL + "/tasks/", json={
+    "title": "Some Title",
+    "description": "Some Desc",
+    "prority": "high",
+    "deadline": "2017-12-17T11:01:55",
+    "subscribers_visibility": "title_only",
+    "public_visibility": "presence_only",
+})
+json = resp.json()
+print(json)
+
+resp = session.delete(BASE_URL + "/tasks/%s" % json["data"]["id"])
+print(resp.content.decode("utf-8"))
