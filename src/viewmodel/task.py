@@ -12,9 +12,7 @@ def create(user_id: int, task: model.task.Task) -> model.task.Task:
 
 
 def update(user_id: int, task_id: int, new: model.task.Task) -> model.task.Task:
-    task = get(task_id=task_id)
-    if not task.owner_id == user_id:
-        raise errors.AccessDeniedException()
+    task = get_owned(user_id=user_id, task_id=task_id)
 
     task.title = new.title
     task.description = new.title
@@ -28,9 +26,7 @@ def update(user_id: int, task_id: int, new: model.task.Task) -> model.task.Task:
 
 
 def start(user_id: int, task_id: int) -> model.task.Task:
-    task = get(task_id=task_id)
-    if not task.owner_id == user_id:
-        raise errors.AccessDeniedException()
+    task = get_owned(user_id=user_id, task_id=task_id)
 
     task.state = model.task.State.started
     model.db.session.commit()
@@ -38,9 +34,7 @@ def start(user_id: int, task_id: int) -> model.task.Task:
 
 
 def pause(user_id: int, task_id: int, ) -> model.task.Task:
-    task = get(task_id=task_id)
-    if not task.owner_id == user_id:
-        raise errors.AccessDeniedException()
+    task = get_owned(user_id=user_id, task_id=task_id)
 
     task.state = model.task.State.paused
     model.db.session.commit()
@@ -48,9 +42,7 @@ def pause(user_id: int, task_id: int, ) -> model.task.Task:
 
 
 def finish(user_id: int, task_id: int, ) -> model.task.Task:
-    task = get(task_id=task_id)
-    if not task.owner_id == user_id:
-        raise errors.AccessDeniedException()
+    task = get_owned(user_id=user_id, task_id=task_id)
 
     task.state = model.task.State.finished
     model.db.session.commit()
@@ -58,9 +50,7 @@ def finish(user_id: int, task_id: int, ) -> model.task.Task:
 
 
 def delete(user_id: int, task_id):
-    task = get(task_id=task_id)
-    if not task.owner_id == user_id:
-        raise errors.AccessDeniedException()
+    task = get_owned(user_id=user_id, task_id=task_id)
 
     model.db.session.delete(task)
     model.db.session.commit()
@@ -69,7 +59,14 @@ def delete(user_id: int, task_id):
 def get(task_id):
     task = model.task.Task.query.get(task_id)
     if not task:
-        raise errors.NotFoundException()
+        raise errors.NotFoundException("Task %s not found" % task_id)
+    return task
+
+
+def get_owned(user_id, task_id):
+    task = get(task_id)
+    if task.owner_id != user_id:
+        raise errors.AccessDeniedException("User %s is not owner of task %s" % (user_id, task_id))
     return task
 
 

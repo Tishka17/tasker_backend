@@ -57,5 +57,8 @@ print(resp.content.decode("utf-8"))
 resp = session.delete(BASE_URL + "/tasks/%s" % task_id)
 print(resp.content.decode("utf-8"))
 
+resp = session.delete(BASE_URL + "/tasks/%s" % task_id)
+print(resp.content.decode("utf-8"))
+
 resp = session.get(BASE_URL + "/users/self/tasks")
 print(resp.content.decode("utf-8"))

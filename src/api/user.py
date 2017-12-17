@@ -10,6 +10,16 @@ import viewmodel.errors
 blueprint = flask.Blueprint("users", __name__)
 
 
+@blueprint.errorhandler(viewmodel.errors.NotFoundException)
+def not_found(error):
+    return flask.jsonify(error=str(error)), 404
+
+
+@blueprint.errorhandler(viewmodel.errors.AccessDeniedException)
+def access_denied(error):
+    return flask.jsonify(error=str(error)), 403
+
+
 @blueprint.route("/", methods=["GET"])
 @jwt_required()
 def get_users():
@@ -23,10 +33,7 @@ def get_users():
 def get_user(user_id=None):
     if user_id is None:
         user_id = int(current_identity)
-    try:
-        user = viewmodel.user.get(user_id)
-    except viewmodel.errors.NotFoundException:
-        return "User not found", 404
+    user = viewmodel.user.get(user_id)
     return flask.jsonify(data=converters.user.to_dict(user))
 
 

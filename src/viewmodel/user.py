@@ -12,7 +12,7 @@ def get_users(offset=0, limit=20):
 def get(user_id):
     user = model.user.User.query.get(user_id)
     if not user:
-        raise errors.NotFoundException()
+        raise errors.NotFoundException("User %s not found" % user_id)
     return user
 
 

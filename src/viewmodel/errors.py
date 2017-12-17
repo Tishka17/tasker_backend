@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class NotFoundException(BaseException):
+
+class NotFoundException(Exception):
     pass
 
-class AccessDeniedException(BaseException):
+
+class AccessDeniedException(Exception):
     pass
