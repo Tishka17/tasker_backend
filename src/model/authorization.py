@@ -8,5 +8,5 @@ from .user import User
 
 class UserAuth(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, autoincrement=False, nullable=False)
-    user = db.relationship(User, backref=backref("authorization", cascade="all,delete"))
+    user = db.relationship(User, backref=backref("authorization", cascade="all,delete", uselist=False))
     password_hash = db.Column(db.String(128), nullable=True)

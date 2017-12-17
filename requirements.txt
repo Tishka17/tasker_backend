@@ -1,2 +1,3 @@
-flask_sqlalchemy
 flask
+flask_sqlalchemy
+flask_jwt
