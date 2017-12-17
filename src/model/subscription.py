@@ -10,5 +10,7 @@ class Subscription(db.Model):
     )
 
     from_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    from_user = db.relationship('User', backref="subscriptions_to")
     to_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    to_user = db.relationship('User', backref="subscriptions_from")
     approved = db.Column(db.Boolean, nullable=False)

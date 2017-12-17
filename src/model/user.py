@@ -5,7 +5,7 @@ from . import visibility
 
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     login = db.Column(db.String(128), nullable=False, unique=True)
     name = db.Column(db.String(128), nullable=False)
     about = db.Column(db.String(1024), nullable=True)
