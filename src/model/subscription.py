@@ -8,7 +8,7 @@ from .user import User
 
 class Subscription(db.Model):
     __table_args__ = (
-        db.UniqueConstraint("type", "external_id", name="uix_subscription"),
+        db.PrimaryKeyConstraint("from_id", "to_id", name="uix_subscription"),
     )
 
     from_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
