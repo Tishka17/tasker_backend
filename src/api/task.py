@@ -5,6 +5,7 @@ from flask_jwt import jwt_required, current_identity
 
 import converters.task
 import converters.datetime
+import converters.reminder
 import viewmodel.task
 import viewmodel.errors
 
@@ -79,3 +80,12 @@ def pause(task_id):
 def finish(task_id):
     task = viewmodel.task.finish(int(current_identity), task_id)
     return flask.jsonify(data=converters.task.to_dict(task))
+
+
+@blueprint.route("/<int:task_id>/remind", methods=["POST"])
+@jwt_required()
+def remind(task_id):
+    json = flask.request.json
+    comment = json.get("comment") if json else None
+    reminder = viewmodel.task.remind(int(current_identity), task_id, comment)
+    return flask.jsonify(data=converters.reminder.to_dict(reminder))

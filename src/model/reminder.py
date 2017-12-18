@@ -9,7 +9,7 @@ from . import db
 
 class Reminder(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    date = db.Column(db.DateTime, default=db.func.now(), nullable=False)
+    creation_date = db.Column(db.DateTime, default=db.func.now(), nullable=False)
     task_id = db.Column(db.Integer, db.ForeignKey('task.id'), nullable=False)
     task = db.relationship(Task, backref=backref("reminders", cascade="all,delete"))
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 import flask
 import model
+#from model import task, user, authorization, external_account, reminder, subscription
+
 import init
 
 import api.user
 import api.task
 import api.authorization
+import viewmodel.authorization
 
 import converters.json_encoder
 
@@ -23,8 +26,8 @@ app.json_encoder = converters.json_encoder.CustomJSONEncoder
 model.db.init_app(app)
 model.db.app = app
 
-api.authorization.jwt.init_app(app)
-api.authorization.jwt.app = app
+viewmodel.authorization.jwt.init_app(app)
+viewmodel.authorization.jwt.app = app
 
 init.deploy(app)
 

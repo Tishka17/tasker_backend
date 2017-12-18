@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import model.task
+import model.reminder
 from . import errors
 
 
@@ -72,3 +73,15 @@ def get_owned(user_id, task_id):
 
 def get_list(offset=0, limit=20):
     return model.task.Task.query.paginate(offset, limit, False).items
+
+
+def remind(user_id: int, task_id: int, comment: str) -> model.reminder.Reminder:
+    task = get(task_id)
+    reminder = model.reminder.Reminder(
+        task=task,
+        author_id=user_id,
+        comment=comment
+    )
+    model.db.session.add(reminder)
+    model.db.session.commit()
+    return reminder

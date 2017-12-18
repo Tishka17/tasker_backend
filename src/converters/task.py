@@ -36,4 +36,4 @@ def from_dict(data):
 
 
 def many_to_dict(tasks: typing.Iterable[model.task.Task]) -> typing.Generator[dict, None, None]:
-    return (to_dict(tasks) for tasks in tasks)
+    return (to_dict(task) for task in tasks)
