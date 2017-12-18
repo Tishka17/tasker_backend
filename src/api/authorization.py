@@ -16,4 +16,5 @@ def login():
 
 @blueprint.route("/vk", methods=["POST"])
 def vk():
-    pass
+    code = flask.request.form["code"]
+    return viewmodel.authorization.auth_by_vk(code)
