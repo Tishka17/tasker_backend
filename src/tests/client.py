@@ -13,7 +13,7 @@ session = requests.session()
 # authenticate
 resp = session.post(BASE_URL + "/auth/login", data={"login": "root", "password": "password"})
 content = resp.json()
-session.headers["Authorization"] = "JWT " + content["access_token"]
+session.headers["Authorization"] = "Bearer " + content["access_token"]
 
 resp = session.get(BASE_URL + "/users/1")
 print(resp.content.decode("utf-8"))
@@ -30,8 +30,8 @@ resp = session.post(BASE_URL + "/tasks/", json={
     "public_visibility": "presence_only",
 })
 json = resp.json()
-task_id = json["data"]["id"]
 print(json)
+task_id = json["data"]["id"]
 
 time.sleep(2)
 resp = session.put(BASE_URL + "/tasks/%s" % task_id, json={

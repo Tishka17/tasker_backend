@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import logging
-
 import flask
+from flask_jwt_extended import set_access_cookies
 
 import viewmodel.authorization
 
@@ -14,7 +14,10 @@ def post():
     login = flask.request.form["login"]
     password = flask.request.form["password"]
     logging.debug("login POST %s %s", login, password)
-    return viewmodel.authorization.auth_by_login(login, password)
+    access_token = viewmodel.authorization.auth_by_login(login, password)
+    resp = flask.redirect("/user", code=301)
+    set_access_cookies(resp, access_token)
+    return resp
 
 
 @blueprint.route("/", methods=["GET"])

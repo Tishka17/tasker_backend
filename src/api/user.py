@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import flask
-from flask_jwt import jwt_required, current_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 import converters.user
 import viewmodel.user
@@ -21,7 +21,7 @@ def access_denied(error):
 
 
 @blueprint.route("/", methods=["GET"])
-@jwt_required()
+@jwt_required
 def get_users():
     res = viewmodel.user.get_users()
     return flask.jsonify(data=converters.user.many_to_dict(res.items))
@@ -29,19 +29,19 @@ def get_users():
 
 @blueprint.route("/<int:user_id>", methods=["GET"])
 @blueprint.route("/self", methods=["GET"])
-@jwt_required()
+@jwt_required
 def get_user(user_id=None):
     if user_id is None:
-        user_id = int(current_identity)
+        user_id = int(get_jwt_identity())
     user = viewmodel.user.get(user_id)
     return flask.jsonify(data=converters.user.to_dict(user))
 
 
 @blueprint.route("/<int:user_id>/tasks", methods=["GET"])
 @blueprint.route("/self/tasks", methods=["GET"])
-@jwt_required()
+@jwt_required
 def get_user_tasks(user_id=None):
     if user_id is None:
-        user_id = int(current_identity)
+        user_id = int(get_jwt_identity())
     res = viewmodel.user.get_user_tasks(user_id)
     return flask.jsonify(data=converters.task.many_to_dict(res.items))

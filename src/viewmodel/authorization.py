@@ -2,34 +2,36 @@
 # -*- coding: utf-8 -*-
 import model.user
 import model.external_account
+from flask_jwt_extended import (
+    JWTManager, create_access_token,
+    get_jwt_identity
+)
 
-import flask_jwt
 import werkzeug.security
 import requests
 
-jwt = flask_jwt.JWT()
+jwt = JWTManager()
 
 
 def handle_auth(user):
     if user \
             and user.confirmed \
             and not user.blocked:
-        access_token = jwt.jwt_encode_callback(user)
-        return jwt.auth_response_callback(access_token, identity)
+        return create_access_token(user.id)
     else:
-        raise flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+        raise None #flask_jwt.JWTError('Bad Request', 'Invalid credentials')
 
-
-@jwt.identity_handler
-def identity(payload):
-    return payload["user_id"]
-
-
-@jwt.jwt_payload_handler
-def make_payload(idnt: model.user.User):
-    res = flask_jwt._default_jwt_payload_handler(idnt)
-    res.update({"user_id": idnt.id})
-    return res
+#
+# @jwt.identity_handler
+# def identity(payload):
+#     return payload["user_id"]
+#
+#
+# @jwt.jwt_payload_handler
+# def make_payload(idnt: model.user.User):
+#     res = flask_jwt._default_jwt_payload_handler(idnt)
+#     res.update({"user_id": idnt.id})
+#     return res
 
 
 def auth_by_login(login, password):
@@ -41,7 +43,7 @@ def auth_by_login(login, password):
             and werkzeug.security.check_password_hash(user.authorization.password_hash, password):
         return handle_auth(user)
     else:
-        raise flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+        raise None #flask_jwt.JWTError('Bad Request', 'Invalid credentials')
 
 
 def make_redirect_url():
