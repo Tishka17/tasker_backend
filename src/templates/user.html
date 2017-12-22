@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Login: {{user.login}} <br/>
-Name: {{user.name or ""}} <br/>
-Public Visibility: {{user.public_visibility}} <br/>
-Subscribers Visibility: {{user.subscribers_visibility}} <br/>
+{% extends "base.html" %}
+{% block content %}
 
-<form action="/logout" method="post">
-    <input type="submit" value="Logout"/>
-</form>
-</body>
-</html>
+<div class="row">
+    <div class="col-sm">
+        Login: {{user.login}} <br/>
+        Name: {{user.name or ""}} <br/>
+        Public Visibility: {{user.public_visibility}} <br/>
+        Subscribers Visibility: {{user.subscribers_visibility}} <br/>
+
+        <form action="/logout" method="post">
+            <input type="submit" value="Logout"/>
+        </form>
+    </div>
+</div>
+{% endblock %}
