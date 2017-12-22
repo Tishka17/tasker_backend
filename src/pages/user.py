@@ -16,5 +16,5 @@ def get():
     user = viewmodel.user.get(get_jwt_identity())
     return flask.render_template(
         "user.html",
-        login=user.login
+        user=user
     )

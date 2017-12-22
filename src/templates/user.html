@@ -5,10 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-{{login}}
+Login: {{user.login}} <br/>
+Name: {{user.name or ""}} <br/>
+Public Visibility: {{user.public_visibility}} <br/>
+Subscribers Visibility: {{user.subscribers_visibility}} <br/>
 
 <form action="/logout" method="post">
-    <input type="submit" value="Logout" />
+    <input type="submit" value="Logout"/>
 </form>
 </body>
 </html>
