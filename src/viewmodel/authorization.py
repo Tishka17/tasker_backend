@@ -3,13 +3,14 @@
 import model.user
 import model.external_account
 from flask_jwt_extended import (
-    JWTManager, create_access_token,
-    get_jwt_identity
+    JWTManager, create_access_token
 )
 
 import werkzeug.security
 import requests
 import flask
+
+import viewmodel.errors
 
 jwt = JWTManager()
 
@@ -45,7 +46,7 @@ def auth_by_login(login, password):
             and werkzeug.security.check_password_hash(user.authorization.password_hash, password):
         return handle_auth(user)
     else:
-        raise None  # flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+        raise viewmodel.errors.InvalidCredentials()
 
 
 def make_redirect_url():
@@ -67,9 +68,10 @@ def auth_by_vk(code):
     }).json()
     print(response)
     if not response or not response.get("response"):
-        raise None ## FIXME
+        raise viewmodel.errors.InvalidCredentials()
     vk_user = response.get("response")[0]
-    external_auth = model.external_account.ExternalAccount.query.filter_by(type="vk", external_id=vk_user["uid"]).one_or_none()
+    external_auth = model.external_account.ExternalAccount.query.filter_by(type="vk",
+                                                                           external_id=vk_user["uid"]).one_or_none()
     if not external_auth:
         user = model.user.User(
             name="{first_name} {last_name}".format(**vk_user).strip(),
@@ -87,5 +89,5 @@ def auth_by_vk(code):
     else:
         user = external_auth.user
         if not user or not user.confirmed or user.blocked:
-            raise None  # flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+            raise viewmodel.errors.InvalidCredentials()
     return handle_auth(user)

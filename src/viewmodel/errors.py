@@ -8,3 +8,7 @@ class NotFoundException(Exception):
 
 class AccessDeniedException(Exception):
     pass
+
+
+class InvalidCredentials(Exception):
+    pass

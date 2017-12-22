@@ -9,16 +9,6 @@ import viewmodel.errors
 from .blueprint import blueprint
 
 
-@blueprint.errorhandler(viewmodel.errors.NotFoundException)
-def not_found(error):
-    return flask.jsonify(error=str(error)), 404
-
-
-@blueprint.errorhandler(viewmodel.errors.AccessDeniedException)
-def access_denied(error):
-    return flask.jsonify(error=str(error)), 403
-
-
 @blueprint.route("/users", methods=["GET"])
 @jwt_required
 def get_users():
