@@ -4,14 +4,12 @@ import logging
 import flask
 from flask_jwt_extended import unset_jwt_cookies, jwt_required
 
-import viewmodel.authorization
-
-blueprint = flask.Blueprint("logout", __name__)
+from .blueprint import blueprint
 
 
-@blueprint.route("/", methods=["POST"])
+@blueprint.route("/logout", methods=["POST"])
 @jwt_required
-def post():
+def logout_post():
     resp = flask.redirect("/login", code=301)
     unset_jwt_cookies(resp)
     return resp

@@ -15,6 +15,9 @@ resp = session.post(BASE_URL + "/auth/login", data={"login": "root", "password":
 content = resp.json()
 session.headers["Authorization"] = "Bearer " + content["access_token"]
 
+resp = session.get(BASE_URL + "/users")
+print(resp.content.decode("utf-8"))
+
 resp = session.get(BASE_URL + "/users/1")
 print(resp.content.decode("utf-8"))
 

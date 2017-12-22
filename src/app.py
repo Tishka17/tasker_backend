@@ -6,12 +6,8 @@ import model
 import init
 import config
 
-import api.user
-import api.task
-import api.authorization
-import pages.login
-import pages.user
-import pages.logout
+import api
+import pages
 import viewmodel.authorization
 
 import converters.json_encoder
@@ -24,7 +20,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SECRET_KEY'] = 'super-secret'  # FIXME generate on first start
-app.config['JWT_TOKEN_LOCATION'] = ['cookies','headers']
+app.config['JWT_TOKEN_LOCATION'] = ['cookies', 'headers']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 app.config['VK_SECRET_KEY'] = config.secret_key
 app.config['VK_CLIENT_ID'] = config.client_id
@@ -39,12 +35,8 @@ viewmodel.authorization.jwt.app = app
 
 init.deploy(app)
 
-app.register_blueprint(api.user.blueprint, url_prefix="/api/v1/users")
-app.register_blueprint(api.task.blueprint, url_prefix="/api/v1/tasks")
-app.register_blueprint(api.authorization.blueprint, url_prefix="/api/v1/auth")
-app.register_blueprint(pages.login.blueprint, url_prefix="/login")
-app.register_blueprint(pages.user.blueprint, url_prefix="/user")
-app.register_blueprint(pages.logout.blueprint, url_prefix="/logout")
+app.register_blueprint(api.blueprint, url_prefix="/api/v1")
+app.register_blueprint(pages.blueprint)
 
 if __name__ == "__main__":
     app.run()

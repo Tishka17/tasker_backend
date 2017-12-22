@@ -6,13 +6,12 @@ import flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 import viewmodel.user
+from .blueprint import blueprint
 
-blueprint = flask.Blueprint("user", __name__)
 
-
-@blueprint.route("/", methods=["GET"])
+@blueprint.route("/users/self", methods=["GET"])
 @jwt_required
-def get():
+def user_get():
     user = viewmodel.user.get(get_jwt_identity())
     return flask.render_template(
         "user.html",

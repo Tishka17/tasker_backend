@@ -3,11 +3,10 @@
 import flask
 
 import viewmodel.authorization
+from .blueprint import blueprint
 
-blueprint = flask.Blueprint("authorization", __name__)
 
-
-@blueprint.route("/login", methods=["POST"])
+@blueprint.route("/auth/login", methods=["POST"])
 def login():
     login = flask.request.form["login"]
     password = flask.request.form["password"]
@@ -15,7 +14,7 @@ def login():
     return flask.jsonify(access_token=access_token), 200
 
 
-@blueprint.route("/vk", methods=["POST"])
+@blueprint.route("/auth/vk", methods=["POST"])
 def vk():
     code = flask.request.form["code"]
     access_token = viewmodel.authorization.auth_by_vk(code)

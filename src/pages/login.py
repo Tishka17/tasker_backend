@@ -5,23 +5,22 @@ import flask
 from flask_jwt_extended import set_access_cookies
 
 import viewmodel.authorization
+from .blueprint import blueprint
 
-blueprint = flask.Blueprint("login", __name__)
 
-
-@blueprint.route("/", methods=["POST"])
-def post():
+@blueprint.route("/login", methods=["POST"])
+def login_post():
     login = flask.request.form["login"]
     password = flask.request.form["password"]
     logging.debug("login POST %s %s", login, password)
     access_token = viewmodel.authorization.auth_by_login(login, password)
-    resp = flask.redirect("/user", code=301)
+    resp = flask.redirect("/users/self", code=301)
     set_access_cookies(resp, access_token)
     return resp
 
 
-@blueprint.route("/", methods=["GET"])
-def get():
+@blueprint.route("/login", methods=["GET"])
+def login_get():
     return flask.render_template(
         "login.html",
         login="",
@@ -30,10 +29,10 @@ def get():
     )
 
 
-@blueprint.route("/vk", methods=["GET"])
-def vk():
+@blueprint.route("/login/vk", methods=["GET"])
+def login_vk():
     code = flask.request.args.get("code")
     access_token = viewmodel.authorization.auth_by_vk(code)
-    resp = flask.redirect("/user", code=301)
+    resp = flask.redirect("/users/self", code=301)
     set_access_cookies(resp, access_token)
     return resp
