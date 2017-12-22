@@ -10,6 +10,7 @@ import api.task
 import api.authorization
 import pages.login
 import pages.user
+import pages.logout
 import viewmodel.authorization
 
 import converters.json_encoder
@@ -39,6 +40,7 @@ app.register_blueprint(api.task.blueprint, url_prefix="/api/v1/tasks")
 app.register_blueprint(api.authorization.blueprint, url_prefix="/api/v1/auth")
 app.register_blueprint(pages.login.blueprint, url_prefix="/login")
 app.register_blueprint(pages.user.blueprint, url_prefix="/user")
+app.register_blueprint(pages.logout.blueprint, url_prefix="/logout")
 
 if __name__ == "__main__":
     app.run()
