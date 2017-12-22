@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row">
-    <div class="col-sm">
-        Login: {{user.login}} <br/>
-        Name: {{user.name or ""}} <br/>
-        Public Visibility: {{user.public_visibility}} <br/>
-        Subscribers Visibility: {{user.subscribers_visibility}} <br/>
-
-        <form action="/logout" method="post">
-            <input type="submit" value="Logout"/>
-        </form>
+<div class="row  justify-content-md-center">
+    <div class="col-sm-3">
+        <div class="card" style="width: 20rem;">
+            <div class="card-body">
+                <p class="card-text">Login: {{user.login}} <br/>
+                    Name: {{user.name or ""}} <br/></p>
+                <p class="card-text">
+                    Public Visibility: {{user.public_visibility}} <br/>
+                    Subscribers Visibility: {{user.subscribers_visibility}} <br/>
+                </p>
+                <form action="/logout" method="post">
+                    <input class="btn btn-primary" type="submit" value="Logout"/>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
