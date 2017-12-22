@@ -9,6 +9,7 @@ from flask_jwt_extended import (
 
 import werkzeug.security
 import requests
+import flask
 
 jwt = JWTManager()
 
@@ -19,7 +20,8 @@ def handle_auth(user):
             and not user.blocked:
         return create_access_token(user.id)
     else:
-        raise None #flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+        raise None  # flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+
 
 #
 # @jwt.identity_handler
@@ -43,35 +45,40 @@ def auth_by_login(login, password):
             and werkzeug.security.check_password_hash(user.authorization.password_hash, password):
         return handle_auth(user)
     else:
-        raise None #flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+        raise None  # flask_jwt.JWTError('Bad Request', 'Invalid credentials')
 
 
 def make_redirect_url():
-    return "http://127.0.0.1"
+    return "http://tasker.itishka.org:5000/login/vk"
 
 
 def auth_by_vk(code):
-    client_id, client_secret = None, None  # TODO: from config
-    responce = requests.get("https://oauth.vk.com/access_token?redirect_uri=%s" % make_redirect_url(), params={
+    client_id = flask.current_app.config["VK_CLIENT_ID"]
+    client_secret = flask.current_app.config["VK_SECRET_KEY"]
+
+    response = requests.get("https://oauth.vk.com/access_token?redirect_uri=%s" % make_redirect_url(), params={
         "client_id": client_id,
         "client_secret": client_secret,
         "code": code
     }).json()
-    responce = requests.get("https://api.vk.com/method/users.get", params={
-        "access_token": responce["access_token"],
+    response = requests.get("https://api.vk.com/method/users.get", params={
+        "access_token": response["access_token"],
         "fields": "sex,bdate,about,deactivated"
     }).json()
-
-    external_auth = model.external_account.ExternalAccount.query.get(type="vk", external_id=responce["id"])
+    print(response)
+    if not response or not response.get("response"):
+        raise None ## FIXME
+    vk_user = response.get("response")[0]
+    external_auth = model.external_account.ExternalAccount.query.filter_by(type="vk", external_id=vk_user["uid"]).one_or_none()
     if not external_auth:
         user = model.user.User(
-            name="{first_name} {last_name}".format(responce).strip(),
-            about=responce.get("about"),
+            name="{first_name} {last_name}".format(**vk_user).strip(),
+            about=vk_user.get("about"),
             confirmed=True
         )
         external_auth = model.external_account.ExternalAccount(
             type="vk",
-            external_id=responce["id"],
+            external_id=vk_user["uid"],
             user=user
         )
         model.db.session.add(user)
@@ -80,5 +87,5 @@ def auth_by_vk(code):
     else:
         user = external_auth.user
         if not user or not user.confirmed or user.blocked:
-            raise flask_jwt.JWTError('Bad Request', 'Invalid credentials')
+            raise None  # flask_jwt.JWTError('Bad Request', 'Invalid credentials')
     return handle_auth(user)

@@ -4,6 +4,7 @@ import flask
 import model
 
 import init
+import config
 
 import api.user
 import api.task
@@ -25,6 +26,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SECRET_KEY'] = 'super-secret'  # FIXME generate on first start
 app.config['JWT_TOKEN_LOCATION'] = ['cookies','headers']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
+app.config['VK_SECRET_KEY'] = config.secret_key
+app.config['VK_CLIENT_ID'] = config.client_id
+
 app.json_encoder = converters.json_encoder.CustomJSONEncoder
 
 model.db.init_app(app)

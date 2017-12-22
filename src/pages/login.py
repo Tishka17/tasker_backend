@@ -25,5 +25,15 @@ def get():
     return flask.render_template(
         "login.html",
         login="",
-        password=""
+        password="",
+        client_id=flask.current_app.config['VK_CLIENT_ID']
     )
+
+
+@blueprint.route("/vk", methods=["GET"])
+def vk():
+    code = flask.request.args.get("code")
+    access_token = viewmodel.authorization.auth_by_vk(code)
+    resp = flask.redirect("/user", code=301)
+    set_access_cookies(resp, access_token)
+    return resp
