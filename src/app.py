@@ -8,7 +8,7 @@ import config
 
 import api
 import pages
-import viewmodel.authorization
+import use_cases.authorization
 
 import converters.json_encoder
 
@@ -30,8 +30,8 @@ app.json_encoder = converters.json_encoder.CustomJSONEncoder
 model.db.init_app(app)
 model.db.app = app
 
-viewmodel.authorization.jwt.init_app(app)
-viewmodel.authorization.jwt.app = app
+use_cases.authorization.jwt.init_app(app)
+use_cases.authorization.jwt.app = app
 
 init.deploy(app)
 

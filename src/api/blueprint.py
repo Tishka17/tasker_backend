@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import flask
-import viewmodel.errors
+import use_cases.errors
 
 blueprint = flask.Blueprint("api", __name__)
 
 
-@blueprint.errorhandler(viewmodel.errors.NotFoundException)
+@blueprint.errorhandler(use_cases.errors.NotFoundException)
 def not_found(error):
     return flask.jsonify(error=str(error)), 404
 
 
-@blueprint.errorhandler(viewmodel.errors.AccessDeniedException)
+@blueprint.errorhandler(use_cases.errors.AccessDeniedException)
 def access_denied(error):
     return flask.jsonify(error=str(error)), 403
 
 
-@blueprint.errorhandler(viewmodel.errors.InvalidCredentials)
+@blueprint.errorhandler(use_cases.errors.InvalidCredentials)
 def invalid_creds(error):
     return flask.jsonify(error=str(error)), 401

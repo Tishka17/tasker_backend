@@ -5,7 +5,7 @@ import logging
 import flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-import viewmodel.user
+import use_cases.user
 import model.user
 import model.visibility
 from .blueprint import blueprint
@@ -14,7 +14,7 @@ from .blueprint import blueprint
 @blueprint.route("/users/self", methods=["GET"])
 @jwt_required
 def user_get():
-    user = viewmodel.user.get(get_jwt_identity())
+    user = use_cases.user.get(get_jwt_identity())
     return flask.render_template(
         "user.html",
         user=user
@@ -24,7 +24,7 @@ def user_get():
 @blueprint.route("/users/self/edit", methods=["GET"])
 @jwt_required
 def self_edit_get():
-    user = viewmodel.user.get(get_jwt_identity())
+    user = use_cases.user.get(get_jwt_identity())
     return flask.render_template(
         "profile_edit.html",
         user=user,
@@ -35,7 +35,7 @@ def self_edit_get():
 @blueprint.route("/users/self/edit", methods=["POST"])
 @jwt_required
 def self_edit_post():
-    viewmodel.user.update_profile(
+    use_cases.user.update_profile(
         user_id=get_jwt_identity(),
         login=flask.request.form.get("login"),
         name=flask.request.form.get("name"),

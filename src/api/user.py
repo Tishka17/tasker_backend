@@ -4,15 +4,15 @@ import flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 import converters.user
-import viewmodel.user
-import viewmodel.errors
+import use_cases.user
+import use_cases.errors
 from .blueprint import blueprint
 
 
 @blueprint.route("/users", methods=["GET"])
 @jwt_required
 def get_users():
-    res = viewmodel.user.get_users()
+    res = use_cases.user.get_users()
     return flask.jsonify(data=converters.user.many_to_dict(res.items))
 
 
@@ -22,7 +22,7 @@ def get_users():
 def get_user(user_id=None):
     if user_id is None:
         user_id = int(get_jwt_identity())
-    user = viewmodel.user.get(user_id)
+    user = use_cases.user.get(user_id)
     return flask.jsonify(data=converters.user.to_dict(user))
 
 
@@ -32,5 +32,5 @@ def get_user(user_id=None):
 def get_user_tasks(user_id=None):
     if user_id is None:
         user_id = int(get_jwt_identity())
-    res = viewmodel.user.get_user_tasks(user_id)
+    res = use_cases.user.get_user_tasks(user_id)
     return flask.jsonify(data=converters.task.many_to_dict(res.items))

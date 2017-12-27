@@ -10,7 +10,7 @@ import werkzeug.security
 import requests
 import flask
 
-import viewmodel.errors
+import use_cases.errors
 
 jwt = JWTManager()
 
@@ -46,7 +46,7 @@ def auth_by_login(login, password):
             and werkzeug.security.check_password_hash(user.authorization.password_hash, password):
         return handle_auth(user)
     else:
-        raise viewmodel.errors.InvalidCredentials()
+        raise use_cases.errors.InvalidCredentials()
 
 
 def make_redirect_url():
@@ -68,7 +68,7 @@ def auth_by_vk(code):
     }).json()
     print(response)
     if not response or not response.get("response"):
-        raise viewmodel.errors.InvalidCredentials()
+        raise use_cases.errors.InvalidCredentials()
     vk_user = response.get("response")[0]
     external_auth = model.external_account.ExternalAccount.query.filter_by(type="vk",
                                                                            external_id=vk_user["uid"]).one_or_none()
@@ -89,5 +89,5 @@ def auth_by_vk(code):
     else:
         user = external_auth.user
         if not user or not user.confirmed or user.blocked:
-            raise viewmodel.errors.InvalidCredentials()
+            raise use_cases.errors.InvalidCredentials()
     return handle_auth(user)
