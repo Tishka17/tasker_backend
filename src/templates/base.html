@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<header class="navbar  navbar-expand-lg  navbar-dark bg-dark">
+<nav class="navbar  navbar-expand-lg  navbar-dark bg-dark">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -29,16 +29,18 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        {% if self %}
+        <form action="/logout" method="post">
+            <input class="btn btn-primary" type="submit" value="Logout"/>
         </form>
+        {% endif %}
+
     </div>
-</header>
+</nav>
 
 <div class="container-fluid">
 
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

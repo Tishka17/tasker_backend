@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row  justify-content-md-center">
+    <div class="col-sm-3">
+        {% for entry in entries %}
+        {{entry.title}}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
