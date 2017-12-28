@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import model.user
+import model.visibility
 
 import typing
 
@@ -17,6 +18,15 @@ def to_dict(user: model.user.User) -> dict:
         "confirmed": user.confirmed,
         "blocked": user.blocked,
     }
+
+
+def from_dict(dct):
+    return model.user.User(
+        login=dct.get("login"),
+        name=dct.get("name"),
+        subscribers_visibility=model.visibility.Visibility(dct.get("subscribers_visibility")),
+        public_visibility=model.visibility.Visibility(dct.get("public_visibility"))
+    )
 
 
 def many_to_dict(users: typing.Iterable[model.user.User]) -> typing.Generator[dict, None, None]:

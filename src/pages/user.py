@@ -6,6 +6,7 @@ import flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 import use_cases.user
+import converters.user
 import model.user
 import model.visibility
 from .blueprint import blueprint
@@ -37,9 +38,6 @@ def self_edit_get():
 def self_edit_post():
     use_cases.user.update_profile(
         user_id=get_jwt_identity(),
-        login=flask.request.form.get("login"),
-        name=flask.request.form.get("name"),
-        public_visibility=flask.request.form.get("public_visibility"),
-        subscribers_visibility=flask.request.form.get("subscribers_visibility"),
+        new_user=converters.user.from_dict(flask.request.form)
     )
     return flask.redirect(location=flask.url_for("pages.self_edit_post"), code=302)
