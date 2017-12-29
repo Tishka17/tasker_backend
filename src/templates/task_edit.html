@@ -7,18 +7,18 @@
         <div class="card-body">
             <form method="post" action="#">
                 <div class="form-group">
-                    <label for="login">Login:</label>
-                    <input class="form-control" type="text" name="login" id="login" value="{{user.login or ''}}"/>
+                    <label for="title">Title:</label>
+                    <input class="form-control" type="text" name="title" id="title" value="{{task.title or ''}}"/>
                 </div>
                 <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input class="form-control" type="text" name="name" id="name" value="{{user.name or ''}}"/>
+                    <label for="deadline">Deadline:</label>
+                    <input class="form-control" type="datetime-local" name="deadline" id="deadline" value="{{task.deadline|isodate or ''}}"/>
                 </div>
                 <div class="form-group">
                     <label for="public_visibility">Public Visibility:</label>
                     <select id="public_visibility" name="public_visibility">
                         {% for vis in visibilities %}
-                        <option {% if user.public_visibility==vis %} selected {% endif %} value="{{vis.value}}">
+                        <option {% if task.public_visibility==vis %} selected {% endif %} value="{{vis.value}}">
                             {{vis.value}}
                         </option>
                         {% endfor %}
@@ -28,13 +28,16 @@
                     <label for="subscribers_visibility">Subscribers Visibility:</label>
                     <select id="subscribers_visibility" name="subscribers_visibility">
                         {% for vis in visibilities %}
-                        <option {% if user.subscribers_visibility==vis %} selected {% endif %} value="{{vis.value}}">
+                        <option {% if task.subscribers_visibility==vis %} selected {% endif %} value="{{vis.value}}">
                             {{vis.value}}
                         </option>
                         {% endfor %}
                     </select>
                 </div>
-
+                <div class="form-group">
+                    <label for="description">Desription:</label><br/>
+                    <textarea id="description" name="description">{{task.description}}</textarea>
+                </div>
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Save">
                 </div>

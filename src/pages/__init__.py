@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from .blueprint import blueprint
-from . import user, logout, login, task
+from . import user, logout, login, task, template_filters
 
 __all__ = [
     "blueprint"
