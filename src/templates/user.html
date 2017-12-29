@@ -8,8 +8,8 @@
                 <p class="card-text">Login: {{user.login}} <br/>
                     Name: {{user.name or ""}} <br/></p>
                 <p class="card-text">
-                    Public Visibility: {{user.public_visibility}} <br/>
-                    Subscribers Visibility: {{user.subscribers_visibility}} <br/>
+                    Public Visibility: {{user.public_visibility|enum}} <br/>
+                    Subscribers Visibility: {{user.subscribers_visibility|enum}} <br/>
                 </p>
                 <a href="/users/self/edit" class="btn btn-primary">Edit</a>
             </div>

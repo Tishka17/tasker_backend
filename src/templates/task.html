@@ -12,8 +12,8 @@
                 <p class="card-text">Deadline: {{task.deadline or ""}}</p>
                 <p class="card-text">State: {{task.state.value or ""}}</p>
                 <p class="card-text">
-                    Public Visibility: {{task.public_visibility}} <br/>
-                    Subscribers Visibility: {{task.subscribers_visibility}} <br/>
+                    Public Visibility: {{task.public_visibility|enum}} <br/>
+                    Subscribers Visibility: {{task.subscribers_visibility|enum}} <br/>
                 </p>
                 <a href="/tasks/{{task.id}}/edit" class="btn btn-primary">Edit</a>
             </div>
