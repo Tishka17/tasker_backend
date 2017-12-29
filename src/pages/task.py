@@ -54,3 +54,12 @@ def get_create_task():
         task=None,
         visibilities=model.visibility.Visibility
     )
+
+
+@blueprint.route("/tasks", methods=["GET"])
+@jwt_required
+def get_task_list():
+    return flask.render_template(
+        "task_list.html",
+        tasks=use_cases.task.get_user_list(get_jwt_identity()),
+    )

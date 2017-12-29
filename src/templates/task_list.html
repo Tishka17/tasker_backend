@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row  justify-content-md-center my-3">
+    <div class="list-group" style="width: 30rem;">
+        {% for task in tasks %}
+        <a href="/tasks/{{task.id}}" class="list-group-item list-group-item-action">
+            {{task.title}}<br/>
+            <small>{{task.deadline or ""}}</small>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

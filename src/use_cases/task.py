@@ -75,6 +75,10 @@ def get_list(offset=0, limit=20):
     return model.task.Task.query.paginate(offset, limit, False).items
 
 
+def get_user_list(user_id, offset=0, limit=20):
+    return model.task.Task.query.filter_by(owner_id=user_id).paginate(offset, limit, False).items
+
+
 def remind(user_id: int, task_id: int, comment: str) -> model.reminder.Reminder:
     task = get(task_id)
     reminder = model.reminder.Reminder(
