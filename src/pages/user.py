@@ -14,8 +14,18 @@ from .blueprint import blueprint
 
 @blueprint.route("/users/self", methods=["GET"])
 @jwt_required
-def user_get():
+def user_get_self():
     user = use_cases.user.get(get_jwt_identity())
+    return flask.render_template(
+        "user.html",
+        user=user
+    )
+
+
+@blueprint.route("/users/<int:user_id>", methods=["GET"])
+@jwt_required
+def user_get(user_id):
+    user = use_cases.user.get(user_id)
     return flask.render_template(
         "user.html",
         user=user
