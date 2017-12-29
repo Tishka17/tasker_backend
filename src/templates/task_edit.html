@@ -17,7 +17,7 @@
                 </div>
                 <div class="form-group">
                     <label for="public_visibility">Public Visibility:</label>
-                    <select id="public_visibility" name="public_visibility">
+                    <select class="form-control" id="public_visibility" name="public_visibility">
                         {% for vis in visibilities %}
                         <option {% if task.public_visibility==vis %} selected {% endif %} value="{{vis.value}}">
                             {{vis.value}}
@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label for="subscribers_visibility">Subscribers Visibility:</label>
-                    <select id="subscribers_visibility" name="subscribers_visibility">
+                    <select class="form-control" id="subscribers_visibility" name="subscribers_visibility">
                         {% for vis in visibilities %}
                         <option {% if task.subscribers_visibility==vis %} selected {% endif %} value="{{vis.value}}">
                             {{vis.value}}
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Desription:</label><br/>
-                    <textarea id="description" name="description">{{task.description}}</textarea>
+                    <textarea id="description"  class="form-control" rows="4" name="description">{{task.description}}</textarea>
                 </div>
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Save">

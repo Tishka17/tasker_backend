@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group">
                     <label for="public_visibility">Public Visibility:</label>
-                    <select id="public_visibility" name="public_visibility">
+                    <select class="form-control" id="public_visibility" name="public_visibility">
                         {% for vis in visibilities %}
                         <option {% if user.public_visibility==vis %} selected {% endif %} value="{{vis.value}}">
                             {{vis.value}}
@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label for="subscribers_visibility">Subscribers Visibility:</label>
-                    <select id="subscribers_visibility" name="subscribers_visibility">
+                    <select class="form-control" id="subscribers_visibility" name="subscribers_visibility">
                         {% for vis in visibilities %}
                         <option {% if user.subscribers_visibility==vis %} selected {% endif %} value="{{vis.value}}">
                             {{vis.value}}
