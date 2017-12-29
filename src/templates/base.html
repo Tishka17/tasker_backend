@@ -17,25 +17,28 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">Navbar</a>
+    {% if current_user_id %}
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/tasks">Задачи</a>
+            </li>
+            <li class="nav-item active">
+                <a class="btn btn-primary" href="/tasks/new">+</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="/users/friends">Друзья</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link" href="/users/self">Профиль</a>
             </li>
         </ul>
-        {% if self %}
         <form action="/logout" method="post">
             <input class="btn btn-primary" type="submit" value="Logout"/>
         </form>
-        {% endif %}
 
     </div>
+    {% endif %}
 </nav>
 
 <div class="container-fluid">

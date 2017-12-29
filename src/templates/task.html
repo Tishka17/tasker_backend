@@ -1,22 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row  justify-content-md-center">
-    <div class="col-sm-3">
-        <div class="card" style="width: 20rem;">
-            <div class="card-body">
-                <h3>{{task.title or ""}} [#{{task.id}}]</h3>
-                <p class="card-text"><em>Owner: {{task.owner.login}}</em></p>
-                <p class="card-text">{{task.description}}</p>
-                <p class="card-text">Priority: {{task.priority.value or ""}}</p>
-                <p class="card-text">Deadline: {{task.deadline or ""}}</p>
-                <p class="card-text">State: {{task.state.value or ""}}</p>
-                <p class="card-text">
-                    Public Visibility: {{task.public_visibility|enum}} <br/>
-                    Subscribers Visibility: {{task.subscribers_visibility|enum}} <br/>
-                </p>
-                <a href="/tasks/{{task.id}}/edit" class="btn btn-primary">Edit</a>
-            </div>
+<div class="row  justify-content-md-center my-3">
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <h3>{{task.title or ""}} [#{{task.id}}]</h3>
+            <p class="card-text"><em>Owner: {{task.owner.login}}</em></p>
+            <p class="card-text">{{task.description}}</p>
+            <p class="card-text">Priority: {{task.priority.value or ""}}</p>
+            <p class="card-text">Deadline: {{task.deadline or ""}}</p>
+            <p class="card-text">State: {{task.state.value or ""}}</p>
+            <p class="card-text">
+                Public Visibility: {{task.public_visibility|enum}} <br/>
+                Subscribers Visibility: {{task.subscribers_visibility|enum}} <br/>
+            </p>
+            <a href="/tasks/{{task.id}}/edit" class="btn btn-primary">Edit</a>
         </div>
     </div>
 </div>

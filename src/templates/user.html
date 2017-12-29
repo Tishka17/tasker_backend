@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row  justify-content-md-center">
-    <div class="col-sm-3">
-        <div class="card" style="width: 20rem;">
-            <div class="card-body">
-                <p class="card-text">Login: {{user.login}} <br/>
-                    Name: {{user.name or ""}} <br/></p>
-                <p class="card-text">
-                    Public Visibility: {{user.public_visibility|enum}} <br/>
-                    Subscribers Visibility: {{user.subscribers_visibility|enum}} <br/>
-                </p>
-                <a href="/users/self/edit" class="btn btn-primary">Edit</a>
-            </div>
+<div class="row  justify-content-md-center my-3">
+
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <p class="card-text">Login: {{user.login}} <br/>
+                Name: {{user.name or ""}} <br/></p>
+            <p class="card-text">
+                Public Visibility: {{user.public_visibility|enum}} <br/>
+                Subscribers Visibility: {{user.subscribers_visibility|enum}} <br/>
+            </p>
+            <a href="/users/self/edit" class="btn btn-primary">Edit</a>
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import jinja2
+from flask_jwt_extended import get_jwt_identity
 from .blueprint import blueprint
 
 
@@ -18,3 +19,8 @@ def jinja2_filter_visibility(app, enum):
     if not enum:
         return ""
     return enum.value
+
+
+@blueprint.context_processor
+def inject_current_user():
+    return {"current_user_id": get_jwt_identity()}
