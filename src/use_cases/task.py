@@ -16,7 +16,7 @@ def update(user_id: int, task_id: int, new: model.task.Task) -> model.task.Task:
     task = get_owned(user_id=user_id, task_id=task_id)
 
     task.title = new.title
-    task.description = new.title
+    task.description = new.description
     task.deadline = new.deadline
     task.priority = new.priority
     task.subscribers_visibility = new.subscribers_visibility

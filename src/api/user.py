@@ -26,7 +26,7 @@ def get_user(user_id=None):
     return flask.jsonify(data=converters.user.to_dict(user))
 
 
-@blueprint.route("/users/self>", methods=["PUT"])
+@blueprint.route("/users/self", methods=["PUT"])
 @jwt_required
 def update_self():
     new = converters.user.from_dict(flask.request.json)
