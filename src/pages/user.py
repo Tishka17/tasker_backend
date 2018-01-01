@@ -50,4 +50,4 @@ def self_edit_post():
         user_id=get_jwt_identity(),
         new_user=converters.user.from_dict(flask.request.form)
     )
-    return flask.redirect(location=flask.url_for("pages.self_edit_post"), code=302)
+    return flask.redirect(location=flask.url_for("pages.self_edit_post"), code=303)

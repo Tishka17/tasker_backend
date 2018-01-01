@@ -11,6 +11,6 @@ from .blueprint import blueprint
 def get_users():
     print("jwt id:",get_jwt_identity())
     if get_jwt_identity():
-        return flask.redirect("/users/self", 302)
+        return flask.redirect("/users/self", 303)
     else:
-        return flask.redirect("/login", 302)
+        return flask.redirect("/login", 303)

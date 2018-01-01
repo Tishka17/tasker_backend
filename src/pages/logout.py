@@ -10,6 +10,6 @@ from .blueprint import blueprint
 @blueprint.route("/logout", methods=["POST"])
 @jwt_required
 def logout_post():
-    resp = flask.redirect("/login", code=301)
+    resp = flask.redirect("/login", code=303)
     unset_jwt_cookies(resp)
     return resp

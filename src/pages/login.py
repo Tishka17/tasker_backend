@@ -14,7 +14,7 @@ def login_post():
     password = flask.request.form["password"]
     logging.debug("login POST %s %s", login, password)
     access_token = use_cases.authorization.auth_by_login(login, password)
-    resp = flask.redirect("/users/self", code=301)
+    resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)
     return resp
 
@@ -33,6 +33,6 @@ def login_get():
 def login_vk():
     code = flask.request.args.get("code")
     access_token = use_cases.authorization.auth_by_vk(code)
-    resp = flask.redirect("/users/self", code=301)
+    resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)
     return resp
