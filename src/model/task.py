@@ -36,8 +36,8 @@ class Task(db.Model):
     priority = db.Column(db.Enum(Priority))
     state = db.Column(db.Enum(State))
     percent_progress = db.Column(db.Integer)
-    public_visibility = db.Column(db.Enum(visibility.Visibility), nullable=True)
-    subscribers_visibility = db.Column(db.Enum(visibility.Visibility), nullable=True)
+    public_visibility = db.Column(visibility.SqlVisibility, nullable=True)
+    subscribers_visibility = db.Column(visibility.SqlVisibility, nullable=True)
 
     @db.validates("percent_progress")
     def validate_progress(self, progress):

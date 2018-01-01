@@ -12,6 +12,6 @@ class User(db.Model):
     registration_date = db.Column(db.DateTime, default=db.func.now())
     blocked = db.Column(db.Boolean, default=False)
     confirmed = db.Column(db.Boolean, default=False)
-    public_visibility = db.Column(db.Enum(visibility.Visibility), nullable=False, default=visibility.Visibility.full)
-    subscribers_visibility = db.Column(db.Enum(visibility.Visibility), nullable=False,
+    public_visibility = db.Column(visibility.SqlVisibility, nullable=False, default=visibility.Visibility.full)
+    subscribers_visibility = db.Column(visibility.SqlVisibility, nullable=False,
                                        default=visibility.Visibility.full)
