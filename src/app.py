@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 import flask
 import model
+import os
 
 import init
-import config
+# import config
 
 import api
 import pages
@@ -18,12 +19,13 @@ app = flask.Flask(__name__)
 app.url_map.strict_slashes = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-app.config['SECRET_KEY'] = 'super-secret'  # FIXME generate on first start
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY'] or 'super-secret'
 app.config['JWT_TOKEN_LOCATION'] = ['cookies', 'headers']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
-app.config['VK_SECRET_KEY'] = config.secret_key
-app.config['VK_CLIENT_ID'] = config.client_id
+app.config['VK_SECRET_KEY'] = os.environ['VK_SECRET_KEY']
+app.config['VK_CLIENT_ID'] = os.environ['VK_CLIENT_ID']
 
 app.json_encoder = converters.json_encoder.CustomJSONEncoder
 
