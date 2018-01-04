@@ -7,7 +7,7 @@ from .blueprint import blueprint
 
 @jinja2.contextfilter
 @blueprint.app_template_filter('isodate')
-def jinja2_filter_isodate(app, date):
+def jinja2_filter_isodate(_, date):
     if not date:
         return ""
     return date.isoformat()
@@ -15,7 +15,7 @@ def jinja2_filter_isodate(app, date):
 
 @jinja2.contextfilter
 @blueprint.app_template_filter('enum')
-def jinja2_filter_visibility(app, enum):
+def jinja2_filter_visibility(_, enum):
     if not enum:
         return ""
     return enum.value

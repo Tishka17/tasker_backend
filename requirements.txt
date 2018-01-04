@@ -1,3 +1,6 @@
+jinja2
+sqlalchemy
+werkzeug
 flask
 flask_sqlalchemy
 flask_jwt_extended

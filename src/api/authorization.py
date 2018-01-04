@@ -7,7 +7,7 @@ from .blueprint import blueprint
 
 
 @blueprint.route("/auth/login", methods=["POST"])
-def login():
+def auth_login():
     login = flask.request.form["login"]
     password = flask.request.form["password"]
     access_token = use_cases.authorization.auth_by_login(login, password)
@@ -15,7 +15,7 @@ def login():
 
 
 @blueprint.route("/auth/vk", methods=["POST"])
-def vk():
+def auth_vk():
     code = flask.request.form["code"]
     access_token = use_cases.authorization.auth_by_vk(code)
     return flask.jsonify(access_token=access_token), 200

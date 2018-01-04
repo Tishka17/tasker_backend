@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import logging
 import flask
 from flask_jwt_extended import unset_jwt_cookies, jwt_required
 
