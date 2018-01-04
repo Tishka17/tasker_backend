@@ -7,6 +7,7 @@ To get access token see authorization endpoint.
 
  
 To use any api method (except authorization) you should send `Authorization` with access token. E.g.
+
 ```
 Authorization: Bearer deadbeef
 ```
@@ -17,32 +18,32 @@ If there is no errors, requested object (or list of objects) is returned in `dat
 
 ### Authorization
 
-#### login+password
-`**POST** /auth/login`
+#### login+password `/auth/login`
 
-**In** (x-www-form-urlencoded):
-* login - login as in set in user profile
-* password - password and was set by user
-
-**Out** (json):
+* **Method**: POST 
+* **In** (x-www-form-urlencoded):
+    * login - login as in set in user profile
+    * password - password and was set by user
+* **Out** (json):
 ```json
 {
   "access_token": "your access token"
 }
 ```
 
-### vk.com
-To get code from vk you should open a page with url: `https://oauth.vk.com/authorize?client_id={{client_id}}&response_type=code&redirect_uri={{redirect_url}}`
+### vk.com `/auth/vk`
+To get code from vk you should open a page with url: 
+```url
+https://oauth.vk.com/authorize?client_id={{client_id}}&response_type=code&redirect_uri={{redirect_url}}
+```
+
 And then wait for opening redirect_uri with code in url params.
 
 Client id and redirect url should be requested from current site author.
 
-`**POST** /auth/vk`
-
-**In**:
-* code, returned by vk
-
-**Out** (json):
+* **Method**: POST 
+* **In** (x-www-form-urlencoded): code, returned by vk
+* **Out** (json):
 ```json
 {
   "access_token": "your access token"
@@ -57,6 +58,9 @@ Client id and redirect url should be requested from current site author.
 
 
 ### User
+
+In all user methods you can use `self` insted of `user_id` if you want to user current logged in user id.
+
 User object, returned from server is json with these fields:
 ```json
 {
@@ -72,19 +76,19 @@ User object, returned from server is json with these fields:
 }
 ```
 
-#### List of users
-`**GET** /users`
-Out: array of user objects
+#### List of users `/users`
 
-#### User info
-`**GET** /users/user_id`
-`**GET** /users/self`
-Out: user info
+* **Method**: GET 
+* **Out**: array of user objects
 
-#### Update user info
-`**PUT** /users/self`
-In: json with user object
-Out: updated user object
+#### User info `/users/user_id`
+* **Method**: GET
+* **Out**: user object
+
+#### Update user info `/users/self`
+* **Method**: PUT
+* **In** (json): user object
+* **Out**: updated user object
 
 Only these fields can be updated:
 * login
@@ -93,10 +97,9 @@ Only these fields can be updated:
 * subscribers_visibility
 * public_visibility
 
-#### Get user tasks
-`**GET** /users/user_id/tasks`
-`**GET** /users/self/tasks`
-Out: array of user tasks (can be empty if user has now tasks)
+#### Get user tasks `/users/user_id/tasks`
+* **Method**: GET
+* **Out**: array of user tasks (can be empty if user has now tasks)
 
 ### Tasks
 
@@ -118,10 +121,10 @@ Task is json with these fields.
     }
 ```
 
-#### Create new task
-`**POST** /tasks"`
-In: json with task object
-Out: json with created task object
+#### Create new task `/tasks`
+ **Method**: POST
+* **In** (json):  task object
+* **Out**: created task object
 
 Only these fields are should be provided:
 * title
@@ -131,14 +134,13 @@ Only these fields are should be provided:
 * public_visibility
 * subscribers_visibility
 
-#### Get List of tasks
-`**GET** /tasks/"`
-Out: array of task objects
+#### Get List of tasks `/tasks/`
+* **Method**: GET
+* **Out**: array of task objects
 
-
-#### Get task by id
-`**GET** /tasks/task_id"`
-Out: task object
+#### Get task by id `/tasks/task_id`
+* **Method**: GET
+* **Out**: task object
 
 #### Update task by id
 `**PUT** /tasks/task_id"`
