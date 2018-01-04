@@ -6,7 +6,7 @@ Base url for all requests is `/api/v1`
 To get access token see authorization endpoint.
 
  
-To use any api method (except authorization) you should send `Authorization` with access token. E.g.
+To use any api method (except authorization) you should send `Authorization` with Bearer type and access token. E.g.
 
 ```
 Authorization: Bearer deadbeef
