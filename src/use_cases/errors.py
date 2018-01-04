@@ -12,3 +12,7 @@ class AccessDeniedException(Exception):
 
 class InvalidCredentials(Exception):
     pass
+
+
+class UserBlocked(Exception):
+    pass

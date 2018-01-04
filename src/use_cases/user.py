@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import model.user
 import model.visibility
+import model.task
 
 from . import errors
 

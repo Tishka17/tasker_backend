@@ -9,7 +9,7 @@ from .blueprint import blueprint
 @blueprint.route("/", methods=["GET"])
 @jwt_optional
 def get_users():
-    print("jwt id:",get_jwt_identity())
+    print("jwt id:", get_jwt_identity())
     if get_jwt_identity():
         return flask.redirect("/users/self", 303)
     else:

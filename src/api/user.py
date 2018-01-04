@@ -4,6 +4,7 @@ import flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 import converters.user
+import converters.task
 import use_cases.user
 import use_cases.errors
 from .blueprint import blueprint

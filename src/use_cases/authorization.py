@@ -21,20 +21,7 @@ def handle_auth(user):
             and not user.blocked:
         return create_access_token(user.id)
     else:
-        raise None  # flask_jwt.JWTError('Bad Request', 'Invalid credentials')
-
-
-#
-# @jwt.identity_handler
-# def identity(payload):
-#     return payload["user_id"]
-#
-#
-# @jwt.jwt_payload_handler
-# def make_payload(idnt: model.user.User):
-#     res = flask_jwt._default_jwt_payload_handler(idnt)
-#     res.update({"user_id": idnt.id})
-#     return res
+        raise use_cases.errors.UserBlocked()
 
 
 def auth_by_login(login, password):

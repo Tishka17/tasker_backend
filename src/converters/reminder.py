@@ -12,6 +12,7 @@ def to_dict(reminder: model.reminder.Reminder) -> dict:
         "creation_date": reminder.creation_date,
         "author": user.to_dict(reminder.author),
         "comment": reminder.comment,
+        "task_id": reminder.task_id,
     }
 
 

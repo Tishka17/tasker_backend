@@ -12,7 +12,7 @@ from .user import User
 @enum.unique
 class Priority(enum.Enum):
     low = "low"
-    middle = "middle"
+    medium = "medium"
     high = "high"
 
 

@@ -17,5 +17,10 @@ def access_denied(error):
 
 
 @blueprint.errorhandler(use_cases.errors.InvalidCredentials)
-def invalid_creds(error):
+def invalid_credentials(error):
+    return flask.jsonify(error=str(error)), 401
+
+
+@blueprint.errorhandler(use_cases.errors.UserBlocked)
+def user_blocked(error):
     return flask.jsonify(error=str(error)), 401

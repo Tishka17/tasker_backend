@@ -27,7 +27,7 @@ print(resp.content.decode("utf-8"))
 resp = session.post(BASE_URL + "/tasks/", json={
     "title": "Some Title",
     "description": "Some Desc",
-    "prority": "high",
+    "priority": "high",
     "deadline": "2017-12-17T11:01:55",
     "subscribers_visibility": "title_only",
     "public_visibility": "presence_only",
@@ -40,7 +40,7 @@ time.sleep(2)
 resp = session.put(BASE_URL + "/tasks/%s" % task_id, json={
     "title": "Some Title 2 ",
     "description": "Some Desc 2",
-    "prority": "medium",
+    "priority": "medium",
     "deadline": "2018-12-17T11:01:55",
     "subscribers_visibility": "presence_only",
     "public_visibility": "invisible",
