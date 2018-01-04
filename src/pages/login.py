@@ -25,7 +25,8 @@ def login_get():
         "login.html",
         login="",
         password="",
-        client_id=flask.current_app.config['VK_CLIENT_ID']
+        client_id=flask.current_app.config['VK_CLIENT_ID'],
+        redirect_url=use_cases.authorization.make_redirect_url()
     )
 
 

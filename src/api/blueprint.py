@@ -22,5 +22,5 @@ def invalid_credentials(error):
 
 
 @blueprint.errorhandler(use_cases.errors.UserBlocked)
-def invalid_creds(error):
+def user_blocked(error):
     return flask.jsonify(error=str(error)), 401
