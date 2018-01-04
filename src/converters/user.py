@@ -24,6 +24,7 @@ def from_dict(dct):
     return model.user.User(
         login=dct.get("login"),
         name=dct.get("name"),
+        about=dct.get("about"),
         subscribers_visibility=model.visibility.Visibility(dct.get("subscribers_visibility")),
         public_visibility=model.visibility.Visibility(dct.get("public_visibility"))
     )
