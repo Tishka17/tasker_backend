@@ -5,7 +5,6 @@ import model
 import os
 
 import init
-# import config
 
 import api
 import pages
@@ -13,15 +12,14 @@ import use_cases.authorization
 
 import converters.json_encoder
 
-DEBUG = True  # FIXME remove in production
+DEBUG = bool(os.environ.get('VK_SECRET_KEY'))
 
 app = flask.Flask(__name__)
 app.url_map.strict_slashes = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY'] or 'super-secret'
+app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY']
 app.config['JWT_TOKEN_LOCATION'] = ['cookies', 'headers']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 app.config['VK_SECRET_KEY'] = os.environ['VK_SECRET_KEY']
