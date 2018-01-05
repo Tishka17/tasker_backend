@@ -82,6 +82,6 @@ def remind(task_id):
 
 @blueprint.route("/tasks/<int:task_id>/reminders", methods=["GET"])
 @jwt_required
-def remind(task_id):
+def get_task_reminders(task_id):
     reminders = use_cases.task.get_reminders(get_jwt_identity(), task_id)
-    return flask.jsonify(data=converters.reminder.many_to_dict(reminders))
+    return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))

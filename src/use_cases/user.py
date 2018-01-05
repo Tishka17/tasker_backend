@@ -3,6 +3,7 @@
 import model.user
 import model.enum
 import model.task
+import model.reminder
 
 from . import errors
 
@@ -31,3 +32,12 @@ def update_profile(user_id, new_user):
     model.db.session.add(user)
     model.db.session.commit()
     return user
+
+
+def get_reminders(user_id, offset=0, limit=20):
+    query = model.reminder.Reminder.query.join(model.task.Task, model.task.Task.owner_id == user_id)
+    return query.paginate(offset, limit, False)
+
+
+def get_sent_reminders(user_id, offset=0, limit=20):
+    return model.reminder.Reminder.query.filter_by(author_id=user_id).paginate(offset, limit, False)

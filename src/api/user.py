@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 import converters.user
 import converters.task
+import converters.reminder
 import use_cases.user
 import use_cases.errors
 from .blueprint import blueprint
@@ -43,3 +44,17 @@ def get_user_tasks(user_id=None):
         user_id = int(get_jwt_identity())
     res = use_cases.user.get_user_tasks(user_id)
     return flask.jsonify(data=converters.task.many_to_dict(res.items))
+
+
+@blueprint.route("/users/self/reminders", methods=["GET"])
+@jwt_required
+def get_user_reminders():
+    reminders = use_cases.user.get_reminders(get_jwt_identity())
+    return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))
+
+
+@blueprint.route("/users/self/sent_reminders", methods=["GET"])
+@jwt_required
+def get_user_sent_reminders():
+    reminders = use_cases.user.get_sent_reminders(get_jwt_identity())
+    return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))

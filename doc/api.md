@@ -186,3 +186,11 @@ Reminder object is
 #### Get reminders by task id `/tasks/task_id/reminders`
 * **Method**: GET
 * Out (json): array of reminder objects 
+
+#### Get received reminders`/users/self/reminders`
+* **Method**: GET
+* Out (json): array of reminder objects 
+
+#### Get sent reminders`/users/self/sent_reminders`
+* **Method**: GET
+* Out (json): array of reminder objects 

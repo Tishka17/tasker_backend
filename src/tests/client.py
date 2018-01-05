@@ -60,6 +60,15 @@ print(resp.json())
 resp = session.post(BASE_URL + "/tasks/%s/remind" % task_id, json={"comment": "Some comment"})
 print(resp.json())
 
+resp = session.get(BASE_URL + "/tasks/%s/reminders" % task_id)
+print(resp.url, resp.content.decode("utf-8"))
+
+resp = session.get(BASE_URL + "/users/self/reminders")
+print(resp.url, resp.content.decode("utf-8"))
+
+resp = session.get(BASE_URL + "/users/self/sent_reminders")
+print(resp.url, resp.content.decode("utf-8"))
+
 resp = session.get(BASE_URL + "/users/self/tasks")
 print(resp.content.decode("utf-8"))
 
