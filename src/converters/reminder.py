@@ -4,6 +4,7 @@ import typing
 
 import model.reminder
 from . import user
+from . import task
 
 
 def to_dict(reminder: model.reminder.Reminder) -> dict:
@@ -13,6 +14,7 @@ def to_dict(reminder: model.reminder.Reminder) -> dict:
         "author": user.to_dict(reminder.author),
         "comment": reminder.comment,
         "task_id": reminder.task_id,
+        "task": task.to_dict(reminder.task)
     }
 
 

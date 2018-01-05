@@ -35,7 +35,9 @@ def update_profile(user_id, new_user):
 
 
 def get_reminders(user_id, offset=0, limit=20):
-    query = model.reminder.Reminder.query.join(model.task.Task, model.task.Task.owner_id == user_id)
+    query = model.reminder.Reminder.query \
+        .join(model.task.Task, model.task.Task.id == model.reminder.Reminder.task_id) \
+        .filter_by(owner_id=user_id)
     return query.paginate(offset, limit, False)
 
 
