@@ -181,3 +181,8 @@ Reminder object is
       "task_id": 2
 }
 ```
+
+
+#### Get task reminders `/tasks/task_id/reminders`
+* **Method**: GET
+* Out (json): array of reminder objects 

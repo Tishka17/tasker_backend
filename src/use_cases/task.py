@@ -90,3 +90,10 @@ def remind(user_id: int, task_id: int, comment: str) -> model.reminder.Reminder:
     model.db.session.add(reminder)
     model.db.session.commit()
     return reminder
+
+
+def get_reminders(user_id, task_id, offset=0, limit=20):
+    task = get(task_id)
+    if task.owner_id != user_id:
+        raise errors.AccessDeniedException("User %s is not owner of task %s" % (user_id, task_id))
+    return model.reminder.Reminder.query.filter_by(task_id=task_id).paginate(offset, limit, False)
