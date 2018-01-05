@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 import use_cases.user
 import converters.user
 import model.user
-import model.visibility
+import model.enum
 from .blueprint import blueprint
 
 
@@ -37,7 +37,7 @@ def self_edit_get():
     return flask.render_template(
         "profile_edit.html",
         user=user,
-        visibilities=model.visibility.Visibility
+        visibilities=model.enum.Visibility
     )
 
 

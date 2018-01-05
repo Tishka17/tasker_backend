@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import model.user
-import model.visibility
+import model.enum
 import model.task
 
 from . import errors

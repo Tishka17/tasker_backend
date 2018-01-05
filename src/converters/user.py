@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import model.user
-import model.visibility
+import model.enum
 
+from . import enum
 import typing
 
 
@@ -13,8 +14,8 @@ def to_dict(user: model.user.User) -> dict:
         "name": user.name,
         "about": user.about,
         "registration_date": user.registration_date,
-        "public_visibility": user.public_visibility,
-        "subscribers_visibility": user.subscribers_visibility,
+        "public_visibility": enum.to_str(user.public_visibility),
+        "subscribers_visibility": enum.to_str(user.subscribers_visibility),
         "confirmed": user.confirmed,
         "blocked": user.blocked,
     }
@@ -25,8 +26,8 @@ def from_dict(dct):
         login=dct.get("login"),
         name=dct.get("name"),
         about=dct.get("about"),
-        subscribers_visibility=model.visibility.Visibility(dct.get("subscribers_visibility")),
-        public_visibility=model.visibility.Visibility(dct.get("public_visibility"))
+        subscribers_visibility=enum.from_str(model.enum.Visibility, dct.get("subscribers_visibility")),
+        public_visibility=enum.from_str(model.enum.Visibility, dct.get("public_visibility"))
     )
 
 
