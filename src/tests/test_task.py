@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-import flask
-
 import model
 import model.user
 import model.task
+
+from . import base
 
 
 class Test1(unittest.TestCase):
@@ -14,16 +14,7 @@ class Test1(unittest.TestCase):
 
     def setUp(self):
         super().setUp()
-
-        app = flask.Flask(__name__)
-        app.config['SQLALCHEMY_ECHO'] = True
-        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-        model.db.init_app(app)
-        app.app_context().push()
-        with app.app_context():
-            model.db.create_all()
-        self.app = app
+        self.app = base.create_app(self._testMethodName)
 
     def tearDown(self):
         super().tearDown()
