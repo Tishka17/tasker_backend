@@ -18,6 +18,7 @@
                 <div class="form-group">
                     <label for="public_visibility">Public Visibility:</label>
                     <select class="form-control" id="public_visibility" name="public_visibility">
+                        <option value="">Use profile settings</option>
                         {% for vis in visibilities %}
                         <option {% if task.public_visibility==vis %} selected {% endif %} value="{{vis.value}}">
                             {{vis.value}}
@@ -28,6 +29,7 @@
                 <div class="form-group">
                     <label for="subscribers_visibility">Subscribers Visibility:</label>
                     <select class="form-control" id="subscribers_visibility" name="subscribers_visibility">
+                        <option value="">Use profile settings</option>
                         {% for vis in visibilities %}
                         <option {% if task.subscribers_visibility==vis %} selected {% endif %} value="{{vis.value}}">
                             {{vis.value}}

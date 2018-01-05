@@ -13,4 +13,20 @@ class Visibility(enum.Enum):
     invisible = "invisible"
 
 
+@enum.unique
+class Priority(enum.Enum):
+    low = "low"
+    medium = "medium"
+    high = "high"
+
+
+@enum.unique
+class State(enum.Enum):
+    started = "started"
+    finished = "finished"
+    paused = "paused"
+
+
 SqlVisibility = db.Enum(Visibility)
+SqlPriority = db.Enum(Priority)
+SqlState = db.Enum(State)

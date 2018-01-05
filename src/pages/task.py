@@ -3,7 +3,7 @@
 import flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-import model.visibility
+import model.enum
 import converters.task
 import converters.datetime
 import converters.reminder
@@ -28,7 +28,7 @@ def get_edit_task(task_id):
     return flask.render_template(
         "task_edit.html",
         task=res,
-        visibilities=model.visibility.Visibility
+        visibilities=model.enum.Visibility
     )
 
 
@@ -52,7 +52,7 @@ def get_create_task():
     return flask.render_template(
         "task_edit.html",
         task=None,
-        visibilities=model.visibility.Visibility
+        visibilities=model.enum.Visibility
     )
 
 

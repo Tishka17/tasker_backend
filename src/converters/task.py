@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import model.task
+import model.enum
+from . import enum
 from . import user
 from . import datetime
 
@@ -19,8 +21,8 @@ def to_dict(task: model.task.Task) -> dict:
         "priority": task.priority,
         "state": task.state,
         "percent_progress": task.percent_progress,
-        "public_visibility": task.public_visibility,
-        "subscribers_visibility": task.subscribers_visibility,
+        "public_visibility": enum.to_str(task.public_visibility),
+        "subscribers_visibility": enum.to_str(task.subscribers_visibility),
     }
 
 
@@ -30,8 +32,8 @@ def from_dict(data):
         description=data.get("description"),
         deadline=datetime.from_str(data.get("deadline")),
         priority=data.get("priority"),
-        public_visibility=data.get("public_visibility"),
-        subscribers_visibility=data.get("subscribers_visibility")
+        public_visibility=enum.from_str(model.enum.Visibility, data.get("public_visibility")),
+        subscribers_visibility=enum.from_str(model.enum.Visibility, data.get("subscribers_visibility"))
     )
 
 

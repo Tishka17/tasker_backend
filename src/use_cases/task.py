@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import model.enum
 import model.task
 import model.reminder
 from . import errors
@@ -29,7 +30,7 @@ def update(user_id: int, task_id: int, new: model.task.Task) -> model.task.Task:
 def start(user_id: int, task_id: int) -> model.task.Task:
     task = get_owned(user_id=user_id, task_id=task_id)
 
-    task.state = model.task.State.started
+    task.state = model.enum.State.started
     model.db.session.commit()
     return task
 
@@ -37,7 +38,7 @@ def start(user_id: int, task_id: int) -> model.task.Task:
 def pause(user_id: int, task_id: int, ) -> model.task.Task:
     task = get_owned(user_id=user_id, task_id=task_id)
 
-    task.state = model.task.State.paused
+    task.state = model.enum.State.paused
     model.db.session.commit()
     return task
 
@@ -45,7 +46,7 @@ def pause(user_id: int, task_id: int, ) -> model.task.Task:
 def finish(user_id: int, task_id: int, ) -> model.task.Task:
     task = get_owned(user_id=user_id, task_id=task_id)
 
-    task.state = model.task.State.finished
+    task.state = model.enum.State.finished
     model.db.session.commit()
     return task
 
@@ -89,3 +90,10 @@ def remind(user_id: int, task_id: int, comment: str) -> model.reminder.Reminder:
     model.db.session.add(reminder)
     model.db.session.commit()
     return reminder
+
+
+def get_reminders(user_id, task_id, offset=0, limit=20):
+    task = get(task_id)
+    if task.owner_id != user_id:
+        raise errors.AccessDeniedException("User %s is not owner of task %s" % (user_id, task_id))
+    return model.reminder.Reminder.query.filter_by(task_id=task_id).paginate(offset, limit, False)

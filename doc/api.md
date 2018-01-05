@@ -142,31 +142,27 @@ Only these fields are should be provided:
 * **Method**: GET
 * **Out**: task object
 
-#### Update task by id
-`**PUT** /tasks/task_id"`
-In: json with task object
-Out: json with updated task object
+#### Update task by id `/tasks/task_id`
+* **Method**: PUT
+* **In**: json with task object
+* **Out**: json with updated task object
 
 Only some fields can be updated. See creating new task
 
-#### Delete task by id
-`**DELETE** /tasks/task_id"`
-Out: empty object
+#### Delete task by id `/tasks/task_id`
+* **Method**: DELETE
+* **Out**: empty object
 
 #### Update task state
 `**PUT** /tasks/task_id/start"`
-Out: json with updated task object
+* Out: json with updated task object
 
 `**PUT** /tasks/task_id/pause"`
-Out: json with updated task object
+* Out: json with updated task object
 
 `**PUT** /tasks/task_id/finish"`
-Out: json with updated task object
+* Out: json with updated task object
 
-#### Create task reminder by task id
-`**POST** /tasks/task_id/remind"`
-In: json with reminder object
-Out: json with created reminder object
 
 ### Reminders
 
@@ -181,3 +177,20 @@ Reminder object is
       "task_id": 2
 }
 ```
+
+#### Create task reminder by task id `/tasks/task_id/remind`
+* **Method**: POST
+* **In** (json): reminder object
+* **Out**: created reminder object
+
+#### Get reminders by task id `/tasks/task_id/reminders`
+* **Method**: GET
+* Out (json): array of reminder objects 
+
+#### Get received reminders`/users/self/reminders`
+* **Method**: GET
+* Out (json): array of reminder objects 
+
+#### Get sent reminders`/users/self/sent_reminders`
+* **Method**: GET
+* Out (json): array of reminder objects 

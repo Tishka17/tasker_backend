@@ -78,3 +78,10 @@ def remind(task_id):
     comment = json.get("comment") if json else None
     reminder = use_cases.task.remind(int(get_jwt_identity()), task_id, comment)
     return flask.jsonify(data=converters.reminder.to_dict(reminder))
+
+
+@blueprint.route("/tasks/<int:task_id>/reminders", methods=["GET"])
+@jwt_required
+def get_task_reminders(task_id):
+    reminders = use_cases.task.get_reminders(get_jwt_identity(), task_id)
+    return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))

@@ -4,7 +4,7 @@
 import model
 import model.user
 import model.authorization
-import model.visibility
+import model.enum
 
 from werkzeug.security import generate_password_hash
 
@@ -16,8 +16,8 @@ def deploy(app):
             login="root",
             confirmed=True,
             blocked=False,
-            public_visibility=model.visibility.Visibility.invisible,
-            subscribers_visibility=model.visibility.Visibility.invisible,
+            public_visibility=model.enum.Visibility.invisible,
+            subscribers_visibility=model.enum.Visibility.invisible,
         )
         user_auth = model.authorization.UserAuth(
             user=user,
