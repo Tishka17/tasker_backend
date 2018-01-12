@@ -3,6 +3,7 @@
 import flask
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
+import flask_addons
 import converters.task
 import converters.datetime
 import converters.reminder
@@ -22,9 +23,11 @@ def new_task():
 
 
 @blueprint.route("/tasks/", methods=["GET"])
+@flask_addons.parametrized("page", "limit")
 @jwt_required
-def get_tasks():
-    res = use_cases.task.get_list()
+def get_tasks(page, limit):
+    print("page=%s, limit=%s"% (page, limit))
+    res = use_cases.task.get_list(page=int(page), limit=int(limit))
     return flask.jsonify(data=converters.task.many_to_dict(res))
 
 

@@ -3,7 +3,6 @@
 
 from sqlalchemy.orm import backref
 
-from model.enum import Priority, State
 from . import db
 from . import enum
 from .user import User

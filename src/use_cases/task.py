@@ -72,12 +72,33 @@ def get_owned(user_id, task_id):
     return task
 
 
-def get_list(offset=0, limit=20):
-    return model.task.Task.query.paginate(offset, limit, False).items
+def _query_list(not_before=None, not_after=None, modified_after=None):
+    query = model.task.Task.query
+    if not_before:
+        query = query.filter(model.task.Task.creation_date >= not_before)
+    if not_after:
+        query = query.filter(model.task.Task.creation_date < not_after)
+    if modified_after:
+        query = query.filter(model.task.Task.modification_date >= modified_after) \
+            .order_by(model.task.Task.modification_date) \
+            .order_by(model.task.Task.id)
+    return query
 
 
-def get_user_list(user_id, offset=0, limit=20):
-    return model.task.Task.query.filter_by(owner_id=user_id).paginate(offset, limit, False).items
+def get_list(page=1, limit=20, not_before=None, not_after=None, modified_after=None):
+    return _query_list(
+        not_before=not_before,
+        not_after=not_after,
+        modified_after=modified_after
+    ).paginate(page, limit, False).items
+
+
+def get_user_list(user_id, page=1, limit=20, not_before=None, not_after=None, modified_after=None):
+    return _query_list(
+        not_before=not_before,
+        not_after=not_after,
+        modified_after=modified_after
+    ).filter_by(owner_id=user_id).paginate(page, limit, False).items
 
 
 def remind(user_id: int, task_id: int, comment: str) -> model.reminder.Reminder:
@@ -92,8 +113,8 @@ def remind(user_id: int, task_id: int, comment: str) -> model.reminder.Reminder:
     return reminder
 
 
-def get_reminders(user_id, task_id, offset=0, limit=20):
+def get_reminders(user_id, task_id, page=1, limit=20):
     task = get(task_id)
     if task.owner_id != user_id:
         raise errors.AccessDeniedException("User %s is not owner of task %s" % (user_id, task_id))
-    return model.reminder.Reminder.query.filter_by(task_id=task_id).paginate(offset, limit, False)
+    return model.reminder.Reminder.query.filter_by(task_id=task_id).paginate(page, limit, False)
