@@ -23,11 +23,12 @@ def new_task():
 
 
 @blueprint.route("/tasks/", methods=["GET"])
-@flask_addons.parametrized("page", "limit")
+@flask_addons.parametrized("page", type=int, required=False)
+@flask_addons.parametrized("limit", type=int, required=False)
 @jwt_required
 def get_tasks(page, limit):
     print("page=%s, limit=%s"% (page, limit))
-    res = use_cases.task.get_list(page=int(page), limit=int(limit))
+    res = use_cases.task.get_list(page=page, limit=limit)
     return flask.jsonify(data=converters.task.many_to_dict(res))
 
 
