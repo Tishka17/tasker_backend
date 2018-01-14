@@ -11,7 +11,6 @@ import pages
 import use_cases.authorization
 
 import converters.json_encoder
-import flask_addons
 
 DEBUG = bool(os.environ.get('VK_SECRET_KEY'))
 

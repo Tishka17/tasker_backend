@@ -4,7 +4,6 @@ import logging
 import flask
 from flask_jwt_extended import set_access_cookies
 
-import flask_addons
 import use_cases.authorization
 from .blueprint import blueprint
 
@@ -32,8 +31,8 @@ def login_get():
 
 
 @blueprint.route("/login/vk", methods=["GET"])
-@flask_addons.parametrized("code")
 def login_vk(code):
+    code = flask.request.args["code"]
     access_token = use_cases.authorization.auth_by_vk(code)
     resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)
