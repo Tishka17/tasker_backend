@@ -25,15 +25,26 @@ def login_get():
         "login.html",
         login="",
         password="",
-        client_id=flask.current_app.config['VK_CLIENT_ID'],
-        redirect_url=use_cases.authorization.make_redirect_url()
+        vk_client_id=flask.current_app.config['VK_CLIENT_ID'],
+        vk_redirect_url=use_cases.authorization.vk_make_redirect_url(),
+        google_client_id=flask.current_app.config['GOOGLE_CLIENT_ID'],
+        google_redirect_url=use_cases.authorization.google_make_redirect_url(),
     )
 
 
 @blueprint.route("/login/vk", methods=["GET"])
-def login_vk(code):
+def login_vk():
     code = flask.request.args["code"]
     access_token = use_cases.authorization.auth_by_vk(code)
+    resp = flask.redirect("/users/self", code=303)
+    set_access_cookies(resp, access_token)
+    return resp
+
+
+@blueprint.route("/login/google", methods=["GET"])
+def login_google():
+    code = flask.request.args["code"]
+    access_token = use_cases.authorization.auth_by_google(code)
     resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)
     return resp

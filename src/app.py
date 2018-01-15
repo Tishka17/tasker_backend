@@ -24,6 +24,8 @@ app.config['JWT_TOKEN_LOCATION'] = ['cookies', 'headers']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 app.config['VK_SECRET_KEY'] = os.environ['VK_SECRET_KEY']
 app.config['VK_CLIENT_ID'] = os.environ['VK_CLIENT_ID']
+app.config['GOOGLE_SECRET_KEY'] = os.environ['GOOGLE_SECRET_KEY']
+app.config['GOOGLE_CLIENT_ID'] = os.environ['GOOGLE_CLIENT_ID']
 
 app.json_encoder = converters.json_encoder.CustomJSONEncoder
 

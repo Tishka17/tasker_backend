@@ -36,7 +36,7 @@ def auth_by_login(login, password):
         raise use_cases.errors.InvalidCredentials()
 
 
-def make_redirect_url():
+def vk_make_redirect_url():
     return "http://tasker.itishka.org:5000/login/vk"
 
 
@@ -44,7 +44,7 @@ def auth_by_vk(code):
     client_id = flask.current_app.config["VK_CLIENT_ID"]
     client_secret = flask.current_app.config["VK_SECRET_KEY"]
 
-    response = requests.get("https://oauth.vk.com/access_token?redirect_uri=%s" % make_redirect_url(), params={
+    response = requests.get("https://oauth.vk.com/access_token?redirect_uri=%s" % vk_make_redirect_url(), params={
         "client_id": client_id,
         "client_secret": client_secret,
         "code": code
@@ -53,12 +53,13 @@ def auth_by_vk(code):
         "access_token": response["access_token"],
         "fields": "sex,bdate,about,deactivated"
     }).json()
-    print(response)
     if not response or not response.get("response"):
         raise use_cases.errors.InvalidCredentials()
     vk_user = response.get("response")[0]
-    external_auth = model.external_account.ExternalAccount.query.filter_by(type="vk",
-                                                                           external_id=vk_user["uid"]).one_or_none()
+    external_auth = model.external_account.ExternalAccount.query.filter_by(
+        type="vk",
+        external_id=vk_user["uid"]
+    ).one_or_none()
     if not external_auth:
         user = model.user.User(
             name="{first_name} {last_name}".format(**vk_user).strip(),
@@ -68,6 +69,55 @@ def auth_by_vk(code):
         external_auth = model.external_account.ExternalAccount(
             type="vk",
             external_id=vk_user["uid"],
+            user=user
+        )
+        model.db.session.add(user)
+        model.db.session.add(external_auth)
+        model.db.session.commit()
+    else:
+        user = external_auth.user
+        if not user or not user.confirmed or user.blocked:
+            raise use_cases.errors.InvalidCredentials()
+    return handle_auth(user)
+
+
+def google_make_redirect_url():
+    return "http://tasker.itishka.org:5000/login/google"
+
+
+def auth_by_google(code):
+    client_id = flask.current_app.config["GOOGLE_CLIENT_ID"]
+    client_secret = flask.current_app.config["GOOGLE_SECRET_KEY"]
+
+    response = requests.post(
+        "https://www.googleapis.com/oauth2/v4/token",
+        data={
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "code": code,
+            "grant_type": "authorization_code",
+            "redirect_uri": google_make_redirect_url(),
+        }
+    ).json()
+    google_user = requests.get("https://www.googleapis.com/plus/v1/people/me", params={
+        "access_token": response["access_token"],
+        "fields": "aboutMe,birthday,displayName,gender,id,image,nickname,verified"
+    }).json()
+    print(google_user)
+    if not response:
+        raise use_cases.errors.InvalidCredentials()
+    external_auth = model.external_account.ExternalAccount.query.filter_by(
+        type="google",
+        external_id=google_user["id"]
+    ).one_or_none()
+    if not external_auth:
+        user = model.user.User(
+            name=google_user.get("displayName").strip(),
+            confirmed=True
+        )
+        external_auth = model.external_account.ExternalAccount(
+            type="google",
+            external_id=google_user["id"],
             user=user
         )
         model.db.session.add(user)
