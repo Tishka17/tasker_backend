@@ -22,7 +22,7 @@ def auth_vk():
 
 
 @blueprint.route("/auth/google", methods=["POST"])
-def auth_vk():
+def auth_google():
     code = flask.request.form["code"]
     access_token = use_cases.authorization.auth_by_google(code)
     return flask.jsonify(access_token=access_token), 200
