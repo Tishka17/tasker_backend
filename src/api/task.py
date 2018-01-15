@@ -24,7 +24,9 @@ def new_task():
 @blueprint.route("/tasks/", methods=["GET"])
 @jwt_required
 def get_tasks():
-    res = use_cases.task.get_list()
+    page = int(flask.request.args.get("page", 1))
+    limit = int(flask.request.args.get("limit", 20))
+    res = use_cases.task.get_list(page=page, limit=limit)
     return flask.jsonify(data=converters.task.many_to_dict(res))
 
 
@@ -83,5 +85,7 @@ def remind(task_id):
 @blueprint.route("/tasks/<int:task_id>/reminders", methods=["GET"])
 @jwt_required
 def get_task_reminders(task_id):
-    reminders = use_cases.task.get_reminders(get_jwt_identity(), task_id)
+    page = int(flask.request.args.get("page", 1))
+    limit = int(flask.request.args.get("limit", 20))
+    reminders = use_cases.task.get_reminders(get_jwt_identity(), task_id, page, limit)
     return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))

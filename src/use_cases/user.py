@@ -8,8 +8,8 @@ import model.reminder
 from . import errors
 
 
-def get_users(offset=0, limit=20):
-    return model.user.User.query.paginate(offset, limit, False)
+def get_users(page=1, limit=20):
+    return model.user.User.query.paginate(page, limit, False)
 
 
 def get(user_id):
@@ -19,8 +19,8 @@ def get(user_id):
     return user
 
 
-def get_user_tasks(user_id, offset=0, limit=20):
-    return model.task.Task.query.filter_by(owner_id=user_id).paginate(offset, limit, False)
+def get_user_tasks(user_id, page=1, limit=20):
+    return model.task.Task.query.filter_by(owner_id=user_id).paginate(page, limit, False)
 
 
 def update_profile(user_id, new_user):
@@ -34,12 +34,12 @@ def update_profile(user_id, new_user):
     return user
 
 
-def get_reminders(user_id, offset=0, limit=20):
+def get_reminders(user_id, page=1, limit=20):
     query = model.reminder.Reminder.query \
         .join(model.task.Task, model.task.Task.id == model.reminder.Reminder.task_id) \
         .filter_by(owner_id=user_id)
-    return query.paginate(offset, limit, False)
+    return query.paginate(page, limit, False)
 
 
-def get_sent_reminders(user_id, offset=0, limit=20):
-    return model.reminder.Reminder.query.filter_by(author_id=user_id).paginate(offset, limit, False)
+def get_sent_reminders(user_id, page=1, limit=20):
+    return model.reminder.Reminder.query.filter_by(author_id=user_id).paginate(page, limit, False)

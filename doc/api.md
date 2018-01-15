@@ -79,6 +79,7 @@ User object, returned from server is json with these fields:
 #### List of users `/users`
 
 * **Method**: GET 
+* **In** (url params): page, limit
 * **Out**: array of user objects
 
 #### User info `/users/user_id`
@@ -99,6 +100,7 @@ Only these fields can be updated:
 
 #### Get user tasks `/users/user_id/tasks`
 * **Method**: GET
+* **In** (url params): page, limit
 * **Out**: array of user tasks (can be empty if user has now tasks)
 
 ### Tasks
@@ -108,7 +110,7 @@ Task is json with these fields.
 {
       "creation_date": "2018-01-04T21:27:55", 
       "deadline": "2018-12-17T11:01:55", 
-      "description": "Some Desc 2", 
+      "description": "Some Desc 2",
       "id": 1, 
       "modification_date": "2018-01-04T21:27:58", 
       "owner": <user object>, 
@@ -136,6 +138,7 @@ Only these fields are should be provided:
 
 #### Get List of tasks `/tasks/`
 * **Method**: GET
+* **In** (url params): page, limit
 * **Out**: array of task objects
 
 #### Get task by id `/tasks/task_id`
@@ -185,12 +188,15 @@ Reminder object is
 
 #### Get reminders by task id `/tasks/task_id/reminders`
 * **Method**: GET
-* Out (json): array of reminder objects 
+* **In** (url params): page, limit
+* **Out** (json): array of reminder objects
 
 #### Get received reminders`/users/self/reminders`
 * **Method**: GET
-* Out (json): array of reminder objects 
+* **In** (url params): page, limit
+* **Out** (json): array of reminder objects
 
 #### Get sent reminders`/users/self/sent_reminders`
 * **Method**: GET
-* Out (json): array of reminder objects 
+* **In** (url params): page, limit
+* **Out** (json): array of reminder objects

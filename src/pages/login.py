@@ -31,8 +31,8 @@ def login_get():
 
 
 @blueprint.route("/login/vk", methods=["GET"])
-def login_vk():
-    code = flask.request.args.get("code")
+def login_vk(code):
+    code = flask.request.args["code"]
     access_token = use_cases.authorization.auth_by_vk(code)
     resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)

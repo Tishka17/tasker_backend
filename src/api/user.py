@@ -14,7 +14,9 @@ from .blueprint import blueprint
 @blueprint.route("/users", methods=["GET"])
 @jwt_required
 def get_users():
-    res = use_cases.user.get_users()
+    page = int(flask.request.args.get("page", 1))
+    limit = int(flask.request.args.get("limit", 20))
+    res = use_cases.user.get_users(page, limit)
     return flask.jsonify(data=converters.user.many_to_dict(res.items))
 
 
@@ -42,19 +44,25 @@ def update_self():
 def get_user_tasks(user_id=None):
     if user_id is None:
         user_id = int(get_jwt_identity())
-    res = use_cases.user.get_user_tasks(user_id)
+    page = int(flask.request.args.get("page", 1))
+    limit = int(flask.request.args.get("limit", 20))
+    res = use_cases.user.get_user_tasks(user_id, page, limit)
     return flask.jsonify(data=converters.task.many_to_dict(res.items))
 
 
 @blueprint.route("/users/self/reminders", methods=["GET"])
 @jwt_required
 def get_user_reminders():
-    reminders = use_cases.user.get_reminders(get_jwt_identity())
+    page = int(flask.request.args.get("page", 1))
+    limit = int(flask.request.args.get("limit", 20))
+    reminders = use_cases.user.get_reminders(get_jwt_identity(), page, limit)
     return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))
 
 
 @blueprint.route("/users/self/sent_reminders", methods=["GET"])
 @jwt_required
 def get_user_sent_reminders():
-    reminders = use_cases.user.get_sent_reminders(get_jwt_identity())
+    page = int(flask.request.args.get("page", 1))
+    limit = int(flask.request.args.get("limit", 20))
+    reminders = use_cases.user.get_sent_reminders(get_jwt_identity(), page, limit)
     return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))
