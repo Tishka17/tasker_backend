@@ -3,6 +3,8 @@
 
 import flask
 
+from . import datetime
+
 
 def get_pagination_params():
     return {
@@ -13,5 +15,7 @@ def get_pagination_params():
 
 def get_task_list_params():
     return {
-        "no_deadline": bool(flask.request.args.get("no_deadline", False))
+        "no_deadline": bool(flask.request.args.get("no_deadline", False)),
+        "deadline_before": datetime.from_str(flask.request.args.get("deadline_before")),
+        "deadline_after": datetime.from_str(flask.request.args.get("deadline_after")),
     }
