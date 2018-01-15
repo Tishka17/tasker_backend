@@ -18,20 +18,23 @@ If there is no errors, requested object (or list of objects) is returned in `dat
 
 ### Authorization
 
-#### login+password `/auth/login`
-
-* **Method**: POST 
-* **In** (x-www-form-urlencoded):
-    * login - login as in set in user profile
-    * password - password and was set by user
-* **Out** (json):
+The response of authotization request is object. Currently there is only `acess_token` available.
+E.g.:
 ```json
 {
   "access_token": "your access token"
 }
 ```
 
-### vk.com `/auth/vk`
+#### login+password `/auth/login`
+
+* **Method**: POST 
+* **In** (x-www-form-urlencoded):
+    * login - login as in set in user profile
+    * password - password and was set by user
+* **Out** (json): authorization result object
+
+#### vk.com `/auth/vk`
 To get code from vk you should open a page with url: 
 ```url
 https://oauth.vk.com/authorize?client_id={{client_id}}&response_type=code&redirect_uri={{redirect_url}}
@@ -42,13 +45,16 @@ And then wait for opening redirect_uri with code in url params.
 Client id and redirect url should be requested from current site author.
 
 * **Method**: POST 
-* **In** (x-www-form-urlencoded): code, returned by vk
-* **Out** (json):
-```json
-{
-  "access_token": "your access token"
-}
-```
+* **In** (x-www-form-urlencoded): code, returned by vk oauth api
+* **Out** (json): authorization result object
+
+#### google.com `/auth/google`
+Client id and redirect url should be requested from current site author.
+
+* **Method**: POST 
+* **In** (x-www-form-urlencoded): code, returned by google oauth api
+* **Out** (json): authorization result object
+
 
 ### Types
 
