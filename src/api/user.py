@@ -6,7 +6,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 import converters.user
 import converters.task
 import converters.reminder
+import converters.query_params
 import use_cases.user
+import use_cases.task
 import use_cases.errors
 from .blueprint import blueprint
 
@@ -14,9 +16,9 @@ from .blueprint import blueprint
 @blueprint.route("/users", methods=["GET"])
 @jwt_required
 def get_users():
-    page = int(flask.request.args.get("page", 1))
-    limit = int(flask.request.args.get("limit", 20))
-    res = use_cases.user.get_users(page, limit)
+    res = use_cases.user.get_users(
+        **converters.query_params.get_pagination_params(),
+    )
     return flask.jsonify(data=converters.user.many_to_dict(res.items))
 
 
@@ -44,25 +46,29 @@ def update_self():
 def get_user_tasks(user_id=None):
     if user_id is None:
         user_id = int(get_jwt_identity())
-    page = int(flask.request.args.get("page", 1))
-    limit = int(flask.request.args.get("limit", 20))
-    res = use_cases.user.get_user_tasks(user_id, page, limit)
+    res = use_cases.task.get_user_list(
+        user_id,
+        **converters.query_params.get_pagination_params(),
+        **converters.query_params.get_task_list_params()
+    )
     return flask.jsonify(data=converters.task.many_to_dict(res.items))
 
 
 @blueprint.route("/users/self/reminders", methods=["GET"])
 @jwt_required
 def get_user_reminders():
-    page = int(flask.request.args.get("page", 1))
-    limit = int(flask.request.args.get("limit", 20))
-    reminders = use_cases.user.get_reminders(get_jwt_identity(), page, limit)
+    reminders = use_cases.user.get_reminders(
+        get_jwt_identity(),
+        **converters.query_params.get_pagination_params(),
+    )
     return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))
 
 
 @blueprint.route("/users/self/sent_reminders", methods=["GET"])
 @jwt_required
 def get_user_sent_reminders():
-    page = int(flask.request.args.get("page", 1))
-    limit = int(flask.request.args.get("limit", 20))
-    reminders = use_cases.user.get_sent_reminders(get_jwt_identity(), page, limit)
+    reminders = use_cases.user.get_sent_reminders(
+        get_jwt_identity(),
+        **converters.query_params.get_pagination_params(),
+    )
     return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))

@@ -72,12 +72,15 @@ def get_owned(user_id, task_id):
     return task
 
 
-def _query_list(not_before=None, not_after=None, modified_after=None):
+def _query_list(not_before=None, not_after=None, modified_after=None, no_deadline=False):
     query = model.task.Task.query
     if not_before:
-        query = query.filter(model.task.Task.creation_date >= not_before)
+        query = query.filter(model.task.Task.deadline >= not_before)
     if not_after:
-        query = query.filter(model.task.Task.creation_date < not_after)
+        query = query.filter(model.task.Task.deadline < not_after)
+    if no_deadline:
+        print(no_deadline)
+        query = query.filter(model.task.Task.deadline == None)
     if modified_after:
         query = query.filter(model.task.Task.modification_date >= modified_after) \
             .order_by(model.task.Task.modification_date) \
@@ -85,19 +88,21 @@ def _query_list(not_before=None, not_after=None, modified_after=None):
     return query
 
 
-def get_list(page=1, limit=20, not_before=None, not_after=None, modified_after=None):
+def get_list(page=1, limit=20, not_before=None, not_after=None, modified_after=None, no_deadline=False):
     return _query_list(
         not_before=not_before,
         not_after=not_after,
-        modified_after=modified_after
+        modified_after=modified_after,
+        no_deadline=no_deadline,
     ).paginate(page, limit, False).items
 
 
-def get_user_list(user_id, page=1, limit=20, not_before=None, not_after=None, modified_after=None):
+def get_user_list(user_id, page=1, limit=20, not_before=None, not_after=None, modified_after=None, no_deadline=False):
     return _query_list(
         not_before=not_before,
         not_after=not_after,
-        modified_after=modified_after
+        modified_after=modified_after,
+        no_deadline=no_deadline
     ).filter_by(owner_id=user_id).paginate(page, limit, False).items
 
 
