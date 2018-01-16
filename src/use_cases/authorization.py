@@ -42,7 +42,7 @@ def auth_by_login(login, password):
 
 
 def vk_make_redirect_url():
-    return "http://tasker.itishka.org:5000/login/vk"
+    return "%s/login/vk" % flask.current_app.config["BASE_URL"]
 
 
 def auth_by_vk(code):
@@ -87,7 +87,7 @@ def auth_by_vk(code):
 
 
 def google_make_redirect_url():
-    return "http://tasker.itishka.org:5000/login/google"
+    return "%s/login/google" % flask.current_app.config["BASE_URL"]
 
 
 def auth_by_google(code):
