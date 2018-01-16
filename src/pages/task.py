@@ -7,6 +7,7 @@ import model.enum
 import converters.task
 import converters.datetime
 import converters.reminder
+import converters.query_params
 import use_cases.task
 from .blueprint import blueprint
 
@@ -59,7 +60,12 @@ def get_create_task():
 @blueprint.route("/tasks", methods=["GET"])
 @jwt_required
 def get_task_list():
+    tasks = use_cases.task.get_user_list(
+        get_jwt_identity(),
+        **converters.query_params.get_pagination_params(),
+        **converters.query_params.get_task_list_params(),
+    )
     return flask.render_template(
         "task_list.html",
-        tasks=use_cases.task.get_user_list(get_jwt_identity()),
+        tasks=tasks,
     )

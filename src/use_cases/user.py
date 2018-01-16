@@ -5,6 +5,7 @@ import model.enum
 import model.task
 import model.reminder
 
+from . import task
 from . import errors
 
 
@@ -17,10 +18,6 @@ def get(user_id):
     if not user:
         raise errors.NotFoundException("User %s not found" % user_id)
     return user
-
-
-def get_user_tasks(user_id, page=1, limit=20):
-    return model.task.Task.query.filter_by(owner_id=user_id).paginate(page, limit, False)
 
 
 def update_profile(user_id, new_user):

@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 import converters.task
 import converters.datetime
 import converters.reminder
+import converters.query_params
 import use_cases.task
 from .blueprint import blueprint
 
@@ -24,9 +25,10 @@ def new_task():
 @blueprint.route("/tasks/", methods=["GET"])
 @jwt_required
 def get_tasks():
-    page = int(flask.request.args.get("page", 1))
-    limit = int(flask.request.args.get("limit", 20))
-    res = use_cases.task.get_list(page=page, limit=limit)
+    res = use_cases.task.get_list(
+        **converters.query_params.get_pagination_params(),
+        **converters.query_params.get_task_list_params(),
+    )
     return flask.jsonify(data=converters.task.many_to_dict(res))
 
 
@@ -85,7 +87,9 @@ def remind(task_id):
 @blueprint.route("/tasks/<int:task_id>/reminders", methods=["GET"])
 @jwt_required
 def get_task_reminders(task_id):
-    page = int(flask.request.args.get("page", 1))
-    limit = int(flask.request.args.get("limit", 20))
-    reminders = use_cases.task.get_reminders(get_jwt_identity(), task_id, page, limit)
+    reminders = use_cases.task.get_reminders(
+        get_jwt_identity(),
+        task_id,
+        **converters.query_params.get_pagination_params(),
+    )
     return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))
