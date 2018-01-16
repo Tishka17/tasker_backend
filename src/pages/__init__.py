@@ -5,5 +5,6 @@ from .blueprint import blueprint
 from . import user, logout, login, task, template_filters, index
 
 __all__ = [
-    "blueprint"
+    "blueprint",
+    "template_filters"
 ]

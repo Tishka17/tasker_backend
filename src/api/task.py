@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 import converters.task
 import converters.datetime
 import converters.reminder
+import converters.pagination
 import converters.query_params
 import use_cases.task
 from .blueprint import blueprint
@@ -29,7 +30,10 @@ def get_tasks():
         **converters.query_params.get_pagination_params(),
         **converters.query_params.get_task_list_params(),
     )
-    return flask.jsonify(data=converters.task.many_to_dict(tasks.items))
+    return flask.jsonify(
+        data=converters.task.many_to_dict(tasks.items),
+        pagination=converters.pagination.to_dict(tasks)
+    )
 
 
 @blueprint.route("/tasks/<int:task_id>", methods=["GET"])
@@ -92,4 +96,7 @@ def get_task_reminders(task_id):
         task_id,
         **converters.query_params.get_pagination_params(),
     )
-    return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))
+    return flask.jsonify(
+        data=converters.reminder.many_to_dict(reminders.items),
+        pagination=converters.pagination.to_dict(reminders)
+    )

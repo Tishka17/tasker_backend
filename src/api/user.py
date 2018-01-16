@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 import converters.user
 import converters.task
 import converters.reminder
+import converters.pagination
 import converters.query_params
 import use_cases.user
 import use_cases.task
@@ -19,7 +20,10 @@ def get_users():
     res = use_cases.user.get_users(
         **converters.query_params.get_pagination_params(),
     )
-    return flask.jsonify(data=converters.user.many_to_dict(res.items))
+    return flask.jsonify(
+        data=converters.user.many_to_dict(res.items),
+        pagination=converters.pagination.to_dict(res)
+    )
 
 
 @blueprint.route("/users/<int:user_id>", methods=["GET"])
@@ -51,7 +55,10 @@ def get_user_tasks(user_id=None):
         **converters.query_params.get_pagination_params(),
         **converters.query_params.get_task_list_params()
     )
-    return flask.jsonify(data=converters.task.many_to_dict(res.items))
+    return flask.jsonify(
+        data=converters.task.many_to_dict(res.items),
+        pagination=converters.pagination.to_dict(res),
+    )
 
 
 @blueprint.route("/users/self/reminders", methods=["GET"])
@@ -61,7 +68,10 @@ def get_user_reminders():
         get_jwt_identity(),
         **converters.query_params.get_pagination_params(),
     )
-    return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))
+    return flask.jsonify(
+        data=converters.reminder.many_to_dict(reminders.items),
+        pagination=converters.pagination.to_dict(reminders)
+    )
 
 
 @blueprint.route("/users/self/sent_reminders", methods=["GET"])
@@ -71,4 +81,7 @@ def get_user_sent_reminders():
         get_jwt_identity(),
         **converters.query_params.get_pagination_params(),
     )
-    return flask.jsonify(data=converters.reminder.many_to_dict(reminders.items))
+    return flask.jsonify(
+        data=converters.reminder.many_to_dict(reminders.items),
+        pagination=converters.pagination.to_dict(reminders)
+    )

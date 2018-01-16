@@ -14,6 +14,7 @@ Authorization: Bearer deadbeef
 
 All responses consist of json with `error` or `data` field.
 If there is no errors, requested object (or list of objects) is returned in `data` field. 
+If list was requested, result will also containt Pagination object.
 
 
 ### Authorization
@@ -61,6 +62,21 @@ Client id and redirect url should be requested from current site author.
 * Datetime is provided in iso format
 * Visibility is enum with values: `full`, `title_only`, `presence_only`, `invisible`
 * Priority is enum with values: `low`, `medium`, `high`
+
+### Pagination
+
+All methods, returning list support HTTP GET params such as
+* `limit` - number of items per page
+* `page` - requested number of page
+
+The response will contain pagination object, which has such fields:
+* `has_next` - true if next page is available
+* `has_prev` - true if next page is available
+* `pages` - total number of pages
+* `page` - current page
+* `per_page` - items count per page 
+* `prev_num` - number of previous page
+* `next_num` - number of next page
 
 
 ### User

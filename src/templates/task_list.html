@@ -1,3 +1,5 @@
+{% from 'pagination.html' import render_pagination with context %}
+
 {% extends "base.html" %}
 {% block content %}
 
@@ -11,4 +13,7 @@
         {% endfor %}
     </div>
 </div>
+
+{{ render_pagination(pagination) }}
+
 {% endblock %}

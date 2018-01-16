@@ -28,6 +28,7 @@ app.config['GOOGLE_SECRET_KEY'] = os.environ['GOOGLE_SECRET_KEY']
 app.config['GOOGLE_CLIENT_ID'] = os.environ['GOOGLE_CLIENT_ID']
 
 app.json_encoder = converters.json_encoder.CustomJSONEncoder
+app.jinja_env.globals['url_for_other_page'] = pages.template_filters.url_for_other_page
 
 model.db.init_app(app)
 model.db.app = app
