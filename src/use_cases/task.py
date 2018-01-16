@@ -83,8 +83,8 @@ def _query_list(deadline_before=None, deadline_after=None, modified_after=None, 
         query = query.filter(model.task.Task.deadline == None)
     if modified_after:
         query = query.filter(model.task.Task.modification_date >= modified_after) \
-            .order_by(model.task.Task.modification_date) \
-            .order_by(model.task.Task.id)
+            .order_by(model.task.Task.modification_date)
+    query = query.order_by(model.task.Task.id)
     return query
 
 

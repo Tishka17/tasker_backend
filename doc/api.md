@@ -106,7 +106,7 @@ Only these fields can be updated:
 
 #### Get user tasks `/users/user_id/tasks`
 * **Method**: GET
-* **In** (url params): page, limit
+* **In** (url params): same as in `/tasks/` (list of all tasks)
 * **Out**: array of user tasks (can be empty if user has now tasks)
 
 ### Tasks
@@ -144,8 +144,18 @@ Only these fields are should be provided:
 
 #### Get List of tasks `/tasks/`
 * **Method**: GET
-* **In** (url params): page, limit
+* **In** (url params): 
+    * page (optional) - number of page 
+    * limit (optional) - limit records per page. Default, 20 
+    * deadline_before (optional) - datetime in isoformat. 
+        Filter tasks with deadline before date provided (excluding). Not checked by default
+    * deadline_after (optional) - datetime in isoformat.
+        Filter tasks with deadline after date provided (including). Not checked by default
+    * modified_after (optional) - datetime in isoformat.
+        Filter tasks changed after date provided (including). Not checked by default
 * **Out**: array of task objects
+
+Tasks are sorted by modifiaction_date if `modified_after` was set. Otherwie they are sorted by id.
 
 #### Get task by id `/tasks/task_id`
 * **Method**: GET
