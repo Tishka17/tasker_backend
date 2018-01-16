@@ -13,6 +13,11 @@ def not_found(error):
     return flask.render_template("404.html", error=str(error)), 404
 
 
+@blueprint.route("/<path:path>")
+def unknown_path(path):
+    return flask.render_template("404.html", error="Unknown path `%s`" % path), 404
+
+
 @blueprint.errorhandler(flask_jwt_extended.exceptions.CSRFError)
 @blueprint.errorhandler(use_cases.errors.AccessDeniedException)
 def access_denied(error):

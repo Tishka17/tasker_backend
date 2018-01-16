@@ -14,6 +14,11 @@ def not_found(error):
     return flask.jsonify(error=str(error)), 404
 
 
+@blueprint.route("/<path:path>")
+def unknown_path(path):
+    return flask.jsonify(error="Object for path `%s` not found" % path), 404
+
+
 @blueprint.errorhandler(flask_jwt_extended.exceptions.CSRFError)
 @blueprint.errorhandler(use_cases.errors.AccessDeniedException)
 def access_denied(error):

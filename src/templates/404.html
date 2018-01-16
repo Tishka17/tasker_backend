@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>404 Not Found</title>
-</head>
-<body>
-<h1>{{error}}</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="row  justify-content-md-center my-3">
+    <div class="col-sm-6">
+        <div class="jumbotron">
+            <h1>Content not found</h1>
+            <p class="lead">{{error}}</p>
+            <hr class="my-4">
+            <p class="lead">
+                <a class="btn btn-info btn-lg" role="button" href="/">Home</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
