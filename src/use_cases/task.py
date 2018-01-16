@@ -4,6 +4,7 @@ import model.enum
 import model.task
 import model.reminder
 from . import errors
+from sqlalchemy import or_
 
 
 def create(user_id: int, task: model.task.Task) -> model.task.Task:
@@ -72,15 +73,20 @@ def get_owned(user_id, task_id):
     return task
 
 
-def _query_list(deadline_before=None, deadline_after=None, modified_after=None, no_deadline=False):
+def _query_list(deadline_before, deadline_after, modified_after, no_deadline, include_finished):
     query = model.task.Task.query
     if deadline_before:
         query = query.filter(model.task.Task.deadline < deadline_before)
     if deadline_after:
         query = query.filter(model.task.Task.deadline >= deadline_after)
+    if not include_finished:
+        query = query.filter(or_(
+            model.task.Task.state != model.enum.State.finished,
+            model.task.Task.state.is_(None)
+        ))
     if no_deadline:
         print(no_deadline)
-        query = query.filter(model.task.Task.deadline == None)
+        query = query.filter(model.task.Task.deadline.is_(None))
     if modified_after:
         query = query.filter(model.task.Task.modification_date >= modified_after) \
             .order_by(model.task.Task.modification_date)
@@ -88,21 +94,25 @@ def _query_list(deadline_before=None, deadline_after=None, modified_after=None, 
     return query
 
 
-def get_list(page=1, limit=20, deadline_before=None, deadline_after=None, modified_after=None, no_deadline=False):
+def get_list(page=1, limit=20, deadline_before=None, deadline_after=None, modified_after=None, no_deadline=False,
+             include_finished=False):
     return _query_list(
         deadline_before=deadline_before,
         deadline_after=deadline_after,
         modified_after=modified_after,
         no_deadline=no_deadline,
+        include_finished=include_finished,
     ).paginate(page, limit, False)
 
 
-def get_user_list(user_id, page=1, limit=20, not_before=None, not_after=None, modified_after=None, no_deadline=False):
+def get_user_list(user_id, page=1, limit=20, deadline_before=None, deadline_after=None, modified_after=None,
+                  no_deadline=False, include_finished=False):
     return _query_list(
-        deadline_before=not_before,
-        deadline_after=not_after,
+        deadline_before=deadline_before,
+        deadline_after=deadline_after,
         modified_after=modified_after,
-        no_deadline=no_deadline
+        no_deadline=no_deadline,
+        include_finished=include_finished
     ).filter_by(owner_id=user_id).paginate(page, limit, False)
 
 

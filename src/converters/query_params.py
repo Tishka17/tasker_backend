@@ -18,4 +18,5 @@ def get_task_list_params():
         "no_deadline": bool(flask.request.args.get("no_deadline", False)),
         "deadline_before": datetime.from_str(flask.request.args.get("deadline_before")),
         "deadline_after": datetime.from_str(flask.request.args.get("deadline_after")),
+        "include_finished": bool(flask.request.args.get("include_finished", False))
     }
