@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import requests
 import os
 import time
@@ -13,6 +16,12 @@ session = requests.session()
 # authenticate
 resp = session.post(BASE_URL + "/auth/login", data={"login": "root", "password": "password"})
 content = resp.json()
+print(content)
+# refresh
+session.headers["Authorization"] = "Bearer " + content["refresh_token"]
+resp = session.post(BASE_URL + "/auth/refresh")
+content = resp.json()
+print(content)
 session.headers["Authorization"] = "Bearer " + content["access_token"]
 
 resp = session.get(BASE_URL + "/users")

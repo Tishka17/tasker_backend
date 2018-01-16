@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>401 Invalid Credentials</title>
-</head>
-<body>
-<h1>Invalid Credentials: {{error}}</h1>
-<a href="/login">Login</a>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="row  justify-content-md-center my-3">
+    <div class="col-sm-6">
+        <div class="jumbotron">
+            <h1>Invalid Credentials</h1>
+            <p class="lead">{{error}}</p>
+            <hr class="my-4">
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" role="button" href="/login">Login</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

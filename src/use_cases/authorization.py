@@ -3,7 +3,7 @@
 import model.user
 import model.external_account
 from flask_jwt_extended import (
-    JWTManager, create_access_token
+    JWTManager, create_access_token, create_refresh_token
 )
 
 import werkzeug.security
@@ -19,9 +19,14 @@ def handle_auth(user):
     if user \
             and user.confirmed \
             and not user.blocked:
-        return create_access_token(user.id)
+        return create_access_token(user.id), create_refresh_token(user.id)
     else:
         raise use_cases.errors.UserBlocked()
+
+
+def refresh(user_id):
+    user = model.user.User.query.filter_by(id=user_id).one_or_none()
+    return handle_auth(user)
 
 
 def auth_by_login(login, password):

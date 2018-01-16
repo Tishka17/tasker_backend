@@ -9,7 +9,7 @@ To get access token see authorization endpoint.
 To use any api method (except authorization) you should send `Authorization` with Bearer type and access token. E.g.
 
 ```
-Authorization: Bearer deadbeef
+Authorization: Bearer your_access_token
 ```
 
 All responses consist of json with `error` or `data` field.
@@ -23,7 +23,8 @@ The response of authotization request is object. Currently there is only `acess_
 E.g.:
 ```json
 {
-  "access_token": "your access token"
+  "access_token": "your access token",
+  "refresh_token": "your refresh token"
 }
 ```
 
@@ -34,6 +35,16 @@ E.g.:
     * login - login as in set in user profile
     * password - password and was set by user
 * **Out** (json): authorization result object
+
+#### Refresh `/auth/refresh`
+
+If your access_token is expired, you can get new one.
+Set authorization header with you `refresh_token`. The response will contain new access and refresh tokens
+
+```
+Authorization: Bearer your_refresh_token
+```
+
 
 #### vk.com `/auth/vk`
 To get code from vk you should open a page with url: 
