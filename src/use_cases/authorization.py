@@ -63,7 +63,7 @@ def auth_by_vk(code):
     vk_user = response.get("response")[0]
     external_auth = model.external_account.ExternalAccount.query.filter_by(
         type="vk",
-        external_id=vk_user["uid"]
+        external_id=str(vk_user["uid"])
     ).one_or_none()
     if not external_auth:
         user = model.user.User(
@@ -73,7 +73,7 @@ def auth_by_vk(code):
         )
         external_auth = model.external_account.ExternalAccount(
             type="vk",
-            external_id=vk_user["uid"],
+            external_id=str(vk_user["uid"]),
             user=user
         )
         model.db.session.add(user)
@@ -113,7 +113,7 @@ def auth_by_google(code):
         raise use_cases.errors.InvalidCredentials()
     external_auth = model.external_account.ExternalAccount.query.filter_by(
         type="google",
-        external_id=google_user["id"]
+        external_id=str(google_user["id"])
     ).one_or_none()
     if not external_auth:
         user = model.user.User(
@@ -122,7 +122,7 @@ def auth_by_google(code):
         )
         external_auth = model.external_account.ExternalAccount(
             type="google",
-            external_id=google_user["id"],
+            external_id=str(google_user["id"]),
             user=user
         )
         model.db.session.add(user)
