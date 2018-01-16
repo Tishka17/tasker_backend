@@ -25,11 +25,11 @@ def new_task():
 @blueprint.route("/tasks/", methods=["GET"])
 @jwt_required
 def get_tasks():
-    res = use_cases.task.get_list(
+    tasks = use_cases.task.get_list(
         **converters.query_params.get_pagination_params(),
         **converters.query_params.get_task_list_params(),
     )
-    return flask.jsonify(data=converters.task.many_to_dict(res))
+    return flask.jsonify(data=converters.task.many_to_dict(tasks.items))
 
 
 @blueprint.route("/tasks/<int:task_id>", methods=["GET"])

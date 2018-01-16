@@ -145,14 +145,18 @@ Only these fields are should be provided:
 #### Get List of tasks `/tasks/`
 * **Method**: GET
 * **In** (url params): 
-    * page (optional) - number of page 
-    * limit (optional) - limit records per page. Default, 20 
-    * deadline_before (optional) - datetime in isoformat. 
+    * `page` (optional) - number of page 
+    * `limit` (optional) - limit records per page. Default, 20 
+    * `deadline_before` (optional) - datetime in isoformat. 
         Filter tasks with deadline before date provided (excluding). Not checked by default
-    * deadline_after (optional) - datetime in isoformat.
+    * `deadline_after` (optional) - datetime in isoformat.
         Filter tasks with deadline after date provided (including). Not checked by default
-    * modified_after (optional) - datetime in isoformat.
+    * `modified_after` (optional) - datetime in isoformat.
         Filter tasks changed after date provided (including). Not checked by default
+    * `no_deadline` (optional) - any non empty value.
+        If present filter only tasks with no deadline set. Do not set together with other deadline filters.
+    * `include_finished` (optional) - any non empty value. 
+        Include tasks with state `finished`. In not present, finished tasks are omitted
 * **Out**: array of task objects
 
 Tasks are sorted by modifiaction_date if `modified_after` was set. Otherwie they are sorted by id.
