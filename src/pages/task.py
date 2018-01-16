@@ -68,4 +68,5 @@ def get_task_list():
     return flask.render_template(
         "task_list.html",
         tasks=tasks.items,
+        pagination=tasks,
     )
