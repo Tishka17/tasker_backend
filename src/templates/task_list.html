@@ -1,19 +1,15 @@
 {% from 'pagination.html' import render_pagination with context %}
+{% from 'task_item.html' import render_task_item with context %}
 
 {% extends "base.html" %}
 {% block content %}
-
-<div class="row  justify-content-md-center my-3">
-    <div class="list-group" style="width: 30rem;">
+<div class="container">
+    <div class="card-columns  my-4">
         {% for task in tasks %}
-        <a href="/tasks/{{task.id}}" class="list-group-item list-group-item-action">
-            {{task.title}}<br/>
-            <small>{{task.deadline or ""}}</small>
-        </a>
+        {{ render_task_item(task) }}
         {% endfor %}
     </div>
 </div>
-
 {{ render_pagination(pagination) }}
 
 {% endblock %}
