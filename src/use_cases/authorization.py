@@ -5,6 +5,7 @@ import model.external_account
 from flask_jwt_extended import (
     JWTManager, create_access_token, create_refresh_token
 )
+import flask_wtf.csrf
 
 import werkzeug.security
 import requests
@@ -13,13 +14,18 @@ import flask
 import use_cases.errors
 
 jwt = JWTManager()
+csrf_protect = flask_wtf.csrf.CSRFProtect()
 
 
 def handle_auth(user):
     if user \
             and user.confirmed \
             and not user.blocked:
-        return create_access_token(user.id), create_refresh_token(user.id)
+        return (
+            create_access_token(user.id),
+            create_refresh_token(user.id),
+            flask_wtf.csrf.generate_csrf()
+        )
     else:
         raise use_cases.errors.UserBlocked()
 

@@ -3,6 +3,7 @@
 import flask
 import jwt.exceptions
 import flask_jwt_extended.exceptions
+import flask_wtf.csrf
 
 import use_cases.errors
 
@@ -43,3 +44,8 @@ def invalid_credentials(error):
 @blueprint.errorhandler(use_cases.errors.UserBlocked)
 def user_blocked(error):
     return flask.jsonify(error=str(error)), 401
+
+
+@blueprint.errorhandler(flask_wtf.csrf.CSRFError)
+def csrf_error(error):
+    return flask.jsonify(error=str(error)), 400
