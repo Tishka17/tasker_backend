@@ -42,4 +42,4 @@ def invalid_cred(error):
 
 @blueprint.errorhandler(flask_wtf.csrf.CSRFError)
 def csrf_error(error):
-    return flask.render_template("403.html", error=str(error)), 403
+    return flask.render_template("403.html", error=str(error.description)), 403

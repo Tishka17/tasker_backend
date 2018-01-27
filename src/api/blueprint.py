@@ -48,4 +48,4 @@ def user_blocked(error):
 
 @blueprint.errorhandler(flask_wtf.csrf.CSRFError)
 def csrf_error(error):
-    return flask.jsonify(error=str(error)), 400
+    return flask.jsonify(error=str(error.description)), 403
