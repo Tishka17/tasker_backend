@@ -23,6 +23,7 @@ resp = session.post(BASE_URL + "/auth/refresh")
 content = resp.json()
 print(content)
 session.headers["Authorization"] = "Bearer " + content["access_token"]
+session.headers["X-CSRFToken"] = content["csrf_token"]
 
 resp = session.get(BASE_URL + "/users")
 print(resp.content.decode("utf-8"))
