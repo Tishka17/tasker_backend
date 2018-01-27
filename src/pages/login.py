@@ -9,11 +9,12 @@ from .blueprint import blueprint
 
 
 @blueprint.route("/login", methods=["POST"])
+@use_cases.authorization.csrf_protect.exempt
 def login_post():
     login = flask.request.form["login"]
     password = flask.request.form["password"]
     logging.debug("login POST %s %s", login, password)
-    access_token, refresh_token = use_cases.authorization.auth_by_login(login, password)
+    access_token, refresh_token, _ = use_cases.authorization.auth_by_login(login, password)
     resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)
     return resp
@@ -35,7 +36,7 @@ def login_get():
 @blueprint.route("/login/vk", methods=["GET"])
 def login_vk():
     code = flask.request.args["code"]
-    access_token, refresh_token = use_cases.authorization.auth_by_vk(code)
+    access_token, refresh_token, _ = use_cases.authorization.auth_by_vk(code)
     resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)
     return resp
@@ -44,7 +45,7 @@ def login_vk():
 @blueprint.route("/login/google", methods=["GET"])
 def login_google():
     code = flask.request.args["code"]
-    access_token, refresh_token = use_cases.authorization.auth_by_google(code)
+    access_token, refresh_token, _ = use_cases.authorization.auth_by_google(code)
     resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)
     return resp
