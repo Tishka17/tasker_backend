@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import flask
+
 import model
 import os
-
 import init
-
 import api
 import pages
 import use_cases.authorization
-
 import converters.json_encoder
 
 DEBUG = bool(os.environ.get('VK_SECRET_KEY'))
@@ -28,12 +26,14 @@ app.config['GOOGLE_SECRET_KEY'] = os.environ['GOOGLE_SECRET_KEY']
 app.config['GOOGLE_CLIENT_ID'] = os.environ['GOOGLE_CLIENT_ID']
 app.config["BASE_URL"] = os.environ['BASE_URL']
 
+
 app.json_encoder = converters.json_encoder.CustomJSONEncoder
 app.jinja_env.globals['url_for_other_page'] = pages.template_filters.url_for_other_page
 
 model.db.init_app(app)
 model.db.app = app
 
+use_cases.authorization.csrf_protect.init_app(app)
 use_cases.authorization.jwt.init_app(app)
 use_cases.authorization.jwt.app = app
 

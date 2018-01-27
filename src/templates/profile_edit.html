@@ -6,6 +6,7 @@
     <div class="card" style="width: 30rem;">
         <div class="card-body">
             <form method="post" action="#">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="form-group">
                     <label for="login">Login:</label>
                     <input class="form-control" type="text" name="login" id="login" value="{{user.login or ''}}"/>

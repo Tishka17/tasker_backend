@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import flask
 import flask_jwt_extended.exceptions
+import flask_wtf.csrf
 import jwt.exceptions
 import use_cases.errors
 
@@ -37,3 +38,8 @@ def access_denied(error):
 @blueprint.errorhandler(use_cases.errors.InvalidCredentials)
 def invalid_cred(error):
     return flask.render_template("401.html", error=str(error)), 401
+
+
+@blueprint.errorhandler(flask_wtf.csrf.CSRFError)
+def csrf_error(error):
+    return flask.render_template("403.html", error=str(error.description)), 403

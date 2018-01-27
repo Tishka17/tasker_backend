@@ -5,6 +5,7 @@ import model.external_account
 from flask_jwt_extended import (
     JWTManager, create_access_token, create_refresh_token
 )
+import flask_wtf.csrf
 
 import werkzeug.security
 import requests
@@ -13,13 +14,18 @@ import flask
 import use_cases.errors
 
 jwt = JWTManager()
+csrf_protect = flask_wtf.csrf.CSRFProtect()
 
 
 def handle_auth(user):
     if user \
             and user.confirmed \
             and not user.blocked:
-        return create_access_token(user.id), create_refresh_token(user.id)
+        return (
+            create_access_token(user.id),
+            create_refresh_token(user.id),
+            flask_wtf.csrf.generate_csrf()
+        )
     else:
         raise use_cases.errors.UserBlocked()
 
@@ -96,6 +102,55 @@ def auth_by_google(code):
 
     response = requests.post(
         "https://www.googleapis.com/oauth2/v4/token",
+        data={
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "code": code,
+            "grant_type": "authorization_code",
+            "redirect_uri": google_make_redirect_url(),
+        }
+    ).json()
+    google_user = requests.get("https://www.googleapis.com/plus/v1/people/me", params={
+        "access_token": response["access_token"],
+        "fields": "aboutMe,birthday,displayName,gender,id,image,nickname,verified"
+    }).json()
+    print(google_user)
+    if not response:
+        raise use_cases.errors.InvalidCredentials()
+    external_auth = model.external_account.ExternalAccount.query.filter_by(
+        type="google",
+        external_id=str(google_user["id"])
+    ).one_or_none()
+    if not external_auth:
+        user = model.user.User(
+            name=google_user.get("displayName").strip(),
+            confirmed=True
+        )
+        external_auth = model.external_account.ExternalAccount(
+            type="google",
+            external_id=str(google_user["id"]),
+            user=user
+        )
+        model.db.session.add(user)
+        model.db.session.add(external_auth)
+        model.db.session.commit()
+    else:
+        user = external_auth.user
+        if not user or not user.confirmed or user.blocked:
+            raise use_cases.errors.InvalidCredentials()
+    return handle_auth(user)
+
+
+def facebook_make_redirect_url():
+    return "%s/login/facebook" % flask.current_app.config["BASE_URL"]
+
+
+def auth_by_facebook(code):
+    client_id = flask.current_app.config["GOOGLE_CLIENT_ID"]
+    client_secret = flask.current_app.config["GOOGLE_SECRET_KEY"]
+
+    response = requests.post(
+        "https://graph.dacebook.com/oauth/access_token",
         data={
             "client_id": client_id,
             "client_secret": client_secret,
