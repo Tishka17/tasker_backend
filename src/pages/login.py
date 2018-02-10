@@ -30,6 +30,8 @@ def login_get():
         vk_redirect_url=use_cases.authorization.vk_make_redirect_url(),
         google_client_id=flask.current_app.config['GOOGLE_CLIENT_ID'],
         google_redirect_url=use_cases.authorization.google_make_redirect_url(),
+        facebook_client_id=flask.current_app.config["FACEBOOK_CLIENT_ID"],
+        facebook_redirect_url=use_cases.authorization.facebook_make_redirect_url(),
     )
 
 
@@ -48,4 +50,13 @@ def login_google():
     access_token, refresh_token, _ = use_cases.authorization.auth_by_google(code)
     resp = flask.redirect("/users/self", code=303)
     set_access_cookies(resp, access_token)
+    return resp
+
+@blueprint.route("/login/facebook", methods=["GET"])
+def login_facebook():
+    code = flask.request.args["code"]
+    access_token, refresh_token, _ = use_cases.authorization.auth_by_facebook(code)
+    resp = flask.redirect("/users/self", code=303)
+    set_access_cookies(resp, access_token)
+    print(resp)
     return resp
