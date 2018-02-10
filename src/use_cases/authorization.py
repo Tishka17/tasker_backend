@@ -146,38 +146,35 @@ def facebook_make_redirect_url():
 
 
 def auth_by_facebook(code):
-    client_id = flask.current_app.config["GOOGLE_CLIENT_ID"]
-    client_secret = flask.current_app.config["GOOGLE_SECRET_KEY"]
-
+    client_id = flask.current_app.config["FACEBOOK_CLIENT_ID"]
+    client_secret = flask.current_app.config["FACEBOOK_SECRET_KEY"]
     response = requests.post(
-        "https://graph.dacebook.com/oauth/access_token",
+        "https://graph.facebook.com/oauth/access_token",
         data={
             "client_id": client_id,
             "client_secret": client_secret,
             "code": code,
             "grant_type": "authorization_code",
-            "redirect_uri": google_make_redirect_url(),
+            "redirect_uri": facebook_make_redirect_url(),
         }
     ).json()
-    google_user = requests.get("https://www.googleapis.com/plus/v1/people/me", params={
+    facebook_user = requests.get("https://graph.facebook.com/v2.11/me?", params={
         "access_token": response["access_token"],
-        "fields": "aboutMe,birthday,displayName,gender,id,image,nickname,verified"
     }).json()
-    print(google_user)
     if not response:
         raise use_cases.errors.InvalidCredentials()
     external_auth = model.external_account.ExternalAccount.query.filter_by(
-        type="google",
-        external_id=str(google_user["id"])
+        type="facebook",
+        external_id=str(facebook_user["id"])
     ).one_or_none()
     if not external_auth:
         user = model.user.User(
-            name=google_user.get("displayName").strip(),
+            name=facebook_user.get("name").strip(),
             confirmed=True
         )
         external_auth = model.external_account.ExternalAccount(
-            type="google",
-            external_id=str(google_user["id"]),
+            type="facebook",
+            external_id=str(facebook_user["id"]),
             user=user
         )
         model.db.session.add(user)
