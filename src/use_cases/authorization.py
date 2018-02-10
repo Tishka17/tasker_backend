@@ -159,24 +159,23 @@ def auth_by_facebook(code):
             "redirect_uri": google_make_redirect_url(),
         }
     ).json()
-    google_user = requests.get("https://www.googleapis.com/plus/v1/people/me", params={
+    google_user = requests.get("https://graph.facebook.com/v2.11/me?", params={
         "access_token": response["access_token"],
-        "fields": "aboutMe,birthday,displayName,gender,id,image,nickname,verified"
     }).json()
     print(google_user)
     if not response:
         raise use_cases.errors.InvalidCredentials()
     external_auth = model.external_account.ExternalAccount.query.filter_by(
-        type="google",
+        type="facebook",
         external_id=str(google_user["id"])
     ).one_or_none()
     if not external_auth:
         user = model.user.User(
-            name=google_user.get("displayName").strip(),
+            name=google_user.get("name").strip(),
             confirmed=True
         )
         external_auth = model.external_account.ExternalAccount(
-            type="google",
+            type="facebook",
             external_id=str(google_user["id"]),
             user=user
         )
