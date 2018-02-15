@@ -7,53 +7,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/main.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
-<body style="background: #F5F5F5">
-
-<nav class="navbar  navbar-expand-lg  navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">Navbar</a>
+<body>
+<div class="my-container">
+    <main> {% block content %}{% endblock %}
+    </main>
     {% if current_user_id %}
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="/tasks">Задачи</a>
-            </li>
-            <li class="nav-item active">
-                <a class="btn btn-dark" href="/tasks/new">+</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/users/friends">Друзья</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/users/self">Профиль</a>
-            </li>
-        </ul>
-        <form action="/logout" method="post">
-            <input class="btn btn-primary" type="submit" value="Logout"/>
-        </form>
+        <nav class="drawer-fixed">
+            <div class="account-header">
+                <form action="/logout" method="post">
+                    <p class="font-title caption">User name
+                        <input class="button" type="submit" value="Logout"/></p>
+                </form>
 
-    </div>
+            </div>
+            <div class="list">
+                <h4 class="font-caption list-caption">Задачи</h4>
+                <p class="list-item-single font-body1 list-item">
+                    <i class="material-icons material-icons-24 list-item-icon"
+                       style="color: rgba(230, 81, 0, 0.87)">today</i>Сегодня
+                </p>
+                <p class="list-item-single font-body1 list-item">
+                    <i class="material-icons material-icons-24 list-item-icon">today</i>Завтра
+                </p>
+                <p class="list-item-single font-body1 list-item">
+                    <i class="material-icons material-icons-24 list-item-icon">view_week</i>Неделя
+                </p>
+                <p class="list-item-single font-body1 list-item">
+                    <i class="material-icons material-icons-24 list-item-icon">more_horiz</i>Ещё
+                </p>
+                <p class="list-item-single font-body1 list-item">
+                    <i class="material-icons material-icons-24 list-item-icon">add</i>Добавить
+                </p>
+                <h4 class="font-caption list-caption">Друзья</h4>
+                <p class="list-item-single font-body1 list-item">
+                    <i class="material-icons material-icons-24 list-item-icon"
+                       style="color: rgba(1, 87, 155, 0.87)">people</i>Список
+                </p>
+                <p class="list-item-single font-body1 list-item">
+                    <i class="material-icons material-icons-24 list-item-icon"
+                       style="color: rgba(183, 28, 28, 0.87)">whatshot</i>Лента
+                </p>
+                </ul>
+            </div>
+        </nav>
     {% endif %}
-</nav>
-
-<div class="container-fluid">
-
-    {% block content %}{% endblock %}
+    <aside class="drawer-fixed" style="display: none">
+        {% block details %}{% endblock %}
+    </aside>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-        crossorigin="anonymous"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
+<footer style="display: none">This is the footer.</footer>
 </body>
 </html>

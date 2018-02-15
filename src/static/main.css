@@ -1,0 +1,146 @@
+body {
+    background: #fafafa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.my-container {
+    display: flex;
+    flex: 1;
+}
+
+main {
+    flex: 1;
+}
+
+nav {
+    flex: 0 0 240px;
+    order: -1;
+    z-index: 1;
+}
+
+.elevation-dialog {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 1);
+}
+
+.drawer {
+    background-color: #FFFFFF;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 1);
+    padding-top: 100px;
+    margin-top: -100px;
+}
+
+.drawer-fixed {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+aside {
+    flex: 0 0 430px;
+    padding: 0 10px;
+}
+
+.font-headline {
+    font-size: 24px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.font-title {
+    font-size: 21px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87)
+}
+
+.font-subheading {
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.font-caption {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.font-body1 {
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.font-body2 {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.list-item {
+    margin: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+    cursor: pointer;
+}
+
+.list-item-single {
+    height: 48px;
+    line-height: 48px;
+}
+
+.button,.list-item:hover {
+    background-color: #EEEEEE;
+}
+
+.button,.list-item:active {
+    background-color: #E0E0E0;
+}
+
+.list-item-icon {
+    color: rgba(0, 0, 0, 0.54);
+    margin-right: 32px;
+    width: 24px;
+    vertical-align: text-bottom;
+}
+
+.list-caption {
+    padding-left: 16px;
+    padding-right: 16px;
+    height: 32px;
+    line-height: 32px;
+}
+
+* + .list-caption {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    margin-top: 4px;
+    padding-top: 4px;
+}
+
+.list {
+    padding-top: 8px;
+}
+
+.caption {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 4px;
+    padding-top: 8px;
+    margin: 0;
+}
+
+.account-header {
+    background-image: url("../static/account-bg.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-color: #2E7D32;
+    padding-top: 56px;
+    margin: 0;
+}
+
+.account-header .font-title {
+    color: rgba(255, 255, 255, 0.87);
+}
