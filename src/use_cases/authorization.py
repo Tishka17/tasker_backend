@@ -15,6 +15,11 @@ import use_cases.errors
 jwt = JWTManager()
 
 
+@jwt.user_loader_callback_loader
+def user_loader_callback(user_id):
+    return model.user.User.query.filter_by(id=user_id).one_or_none()
+
+
 def handle_auth(user):
     if user \
             and user.confirmed \

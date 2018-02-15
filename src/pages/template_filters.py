@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import jinja2
 import flask
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import get_current_user
 from .blueprint import blueprint
 
 
@@ -24,7 +24,7 @@ def jinja2_filter_visibility(_, enum):
 
 @blueprint.context_processor
 def inject_current_user():
-    return {"current_user_id": get_jwt_identity()}
+    return {"current_user": get_current_user()}
 
 
 def url_for_other_page(page):

@@ -16,11 +16,11 @@
 <div class="my-container">
     <main> {% block content %}{% endblock %}
     </main>
-    {% if current_user_id %}
+    {% if current_user %}
         <nav class="drawer-fixed">
             <div class="account-header">
                 <form action="/logout" method="post">
-                    <p class="font-title caption">User name
+                    <p class="font-title caption">{{ current_user.name }}
                         <input class="button" type="submit" value="Logout"/></p>
                 </form>
 
