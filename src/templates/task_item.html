@@ -1,33 +1,42 @@
 {% macro render_task_item(task) %}
-<div class="card">
-    <div class="card-body">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{task.title}}</h5>
-            <div class="dropdown">
-                <button class="btn btn-link" type="button" id="dropdownMenu2"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-ellipsis-v text-dark"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <a class="dropdown-item" href="/tasks/{{task.id}}/edit"><i class="fas fa-pencil-alt"></i> Edit</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> Remove</a>
-                </div>
-            </div>
-        </div>
-        {% if task.deadline %}
-        <p class="card-text"><i class="fas fa-clock text-secondary"></i> {{task.deadline}}</p>
-        {% endif %}
-        <p class="card-text">{{task.description}}</p>
-        <div class="d-flex justify-content-between">
-            <div>
-                <a href="/tasks/{{task.id}}" class="btn btn-primary" role="button">View</a>
-            </div>
-            <div>
-                <button type="button" class="btn btn-light"><i class="fas fa-check text-success"></i> Done</button>
-                <button type="button" class="btn btn-light"><i class="fas fa-pause text-warning"></i></button>
-            </div>
-        </div>
+
+
+    <div class="list-item-3lines font-body1 list-item">
+        {{ task.title }}
+        <div class="font-secondary">{{ task.description }}</div>
     </div>
-</div>
+
+
+    {##}
+    {#    <div class="card">#}
+    {#        <div class="card-body">#}
+    {#            <div class="d-flex w-100 justify-content-between">#}
+    {#                <h5 class="mb-1">{{ task.title }}</h5>#}
+    {#                <div class="dropdown">#}
+    {#                    <button class="btn btn-link" type="button" id="dropdownMenu2"#}
+    {#                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+    {#                        <i class="fas fa-ellipsis-v text-dark"></i>#}
+    {#                    </button>#}
+    {#                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">#}
+    {#                        <a class="dropdown-item" href="/tasks/{{ task.id }}/edit"><i class="fas fa-pencil-alt"></i> Edit</a>#}
+    {#                        <a class="dropdown-item" href="#"><i class="fas fa-trash text-danger"></i> Remove</a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            {% if task.deadline %}#}
+    {#                <p class="card-text"><i class="fas fa-clock text-secondary"></i> {{ task.deadline }}</p>#}
+    {#            {% endif %}#}
+    {#            <p class="card-text">{{ task.description }}</p>#}
+    {#            <div class="d-flex justify-content-between">#}
+    {#                <div>#}
+    {#                    <a href="/tasks/{{ task.id }}" class="btn btn-primary" role="button">View</a>#}
+    {#                </div>#}
+    {#                <div>#}
+    {#                    <button type="button" class="btn btn-light"><i class="fas fa-check text-success"></i> Done</button>#}
+    {#                    <button type="button" class="btn btn-light"><i class="fas fa-pause text-warning"></i></button>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
 
 {% endmacro %}

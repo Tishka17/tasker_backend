@@ -25,6 +25,12 @@ nav {
 .elevation-dialog {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 1);
 }
+.elevation-toolbar {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 1);
+    margin-left: -1px;
+    margin-right: -1px;
+    z-index: 1;
+}
 
 .drawer {
     background-color: #FFFFFF;
@@ -35,12 +41,12 @@ nav {
 
 .drawer-fixed {
     background-color: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 aside {
     flex: 0 0 430px;
-    padding: 0 10px;
 }
 
 .font-headline {
@@ -78,24 +84,43 @@ aside {
     font-weight: 500;
     color: rgba(0, 0, 0, 0.87);
 }
+.font-secondary {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.54);
+}
 
 .list-item {
     margin: 0;
     padding-left: 16px;
     padding-right: 16px;
     cursor: pointer;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 100%;
+    display: block;
 }
 
-.list-item-single {
-    height: 48px;
-    line-height: 48px;
+/*.list-item-1line {*/
+    /*height: 48px;*/
+    /*line-height: 48px;*/
+/*}*/
+
+/*.list-item-3lines {*/
+    /*padding-top: 12px;*/
+    /*padding-bottom: 12px;*/
+/*}*/
+
+.list-item-3lines .font-body2 {
+    max-lines: 2;
 }
 
-.button,.list-item:hover {
+.button, .list-item:hover {
     background-color: #EEEEEE;
+    text-decoration: none;
 }
 
-.button,.list-item:active {
+.button, .list-item:active {
     background-color: #E0E0E0;
 }
 
@@ -138,9 +163,42 @@ aside {
     background-size: cover;
     background-color: #2E7D32;
     padding-top: 56px;
+    height: 100px;
     margin: 0;
 }
 
 .account-header .font-title {
     color: rgba(255, 255, 255, 0.87);
+}
+
+.main-header {
+    border-top: 2px solid rgba(0, 0, 0, 0);
+    background-color: #388E3C;
+    padding-top: 56px;
+    margin: 0;
+    height: 100px;
+}
+
+.main-header .font-headline {
+    color: rgba(255, 255, 255, 0.87);
+}
+
+
+.details-header {
+    border-top: 2px solid rgba(0, 0, 0, 0);
+    background-color: #2E7D32;
+    padding-top: 56px;
+    margin: 0;
+    height: 100px;
+}
+
+.details-header .font-headline {
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.main-text {
+    margin-left: 32px;
+    margin-right: 32px;
+    margin-top: 16px;
+    margin-bottom: 16px;
 }

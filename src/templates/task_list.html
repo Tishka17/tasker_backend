@@ -3,13 +3,17 @@
 
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <div class="card-columns  my-4">
-        {% for task in tasks %}
-        {{ render_task_item(task) }}
-        {% endfor %}
+
+    <div class="main-header elevation-toolbar">
+        <h1 class="font-headline caption">Сегодня</h1>
     </div>
-</div>
-{{ render_pagination(pagination) }}
+
+    <div class="list">
+
+        {% for task in tasks %}
+            {{ render_task_item(task) }}
+        {% endfor %}
+        {{ render_pagination(pagination) }}
+    </div>
 
 {% endblock %}
