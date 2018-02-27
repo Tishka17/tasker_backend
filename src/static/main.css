@@ -14,6 +14,7 @@ body {
 
 main {
     flex: 1;
+    margin: 0 48px;
 }
 
 nav {
@@ -55,6 +56,11 @@ aside {
     color: rgba(0, 0, 0, 0.87);
 }
 
+.font-display1{
+    font-size: 34px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+}
 .font-title {
     font-size: 21px;
     font-weight: 500;
@@ -173,20 +179,21 @@ aside {
 
 .main-header {
     border-top: 2px solid rgba(0, 0, 0, 0);
-    background-color: #388E3C;
+    /*background-color: #388E3C;*/
     padding-top: 56px;
     margin: 0;
     height: 100px;
 }
 
-.main-header .font-headline {
-    color: rgba(255, 255, 255, 0.87);
+.main-header .font-display1 {
+    /*color: rgba(255, 255, 255, 0.87);*/
+    color: rgba(27, 94, 32, 0.87);
 }
 
 
 .details-header {
     border-top: 2px solid rgba(0, 0, 0, 0);
-    background-color: #2E7D32;
+    /*background-color: #2E7D32;*/
     padding-top: 56px;
     margin: 0;
     height: 100px;
