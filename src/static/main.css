@@ -26,6 +26,7 @@ nav {
 .elevation-dialog {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 1);
 }
+
 .elevation-toolbar {
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 1);
     margin-left: -1px;
@@ -56,11 +57,12 @@ aside {
     color: rgba(0, 0, 0, 0.87);
 }
 
-.font-display1{
+.font-display1 {
     font-size: 34px;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.54);
 }
+
 .font-title {
     font-size: 21px;
     font-weight: 500;
@@ -90,6 +92,7 @@ aside {
     font-weight: 500;
     color: rgba(0, 0, 0, 0.87);
 }
+
 .font-secondary {
     font-size: 14px;
     font-weight: 400;
@@ -105,16 +108,17 @@ aside {
     padding-bottom: 12px;
     width: 100%;
     display: block;
+    text-decoration: none;
 }
 
 /*.list-item-1line {*/
-    /*height: 48px;*/
-    /*line-height: 48px;*/
+/*height: 48px;*/
+/*line-height: 48px;*/
 /*}*/
 
 /*.list-item-3lines {*/
-    /*padding-top: 12px;*/
-    /*padding-bottom: 12px;*/
+/*padding-top: 12px;*/
+/*padding-bottom: 12px;*/
 /*}*/
 
 .list-item-3lines .font-body2 {
@@ -169,7 +173,7 @@ aside {
     background-size: cover;
     background-color: #2E7D32;
     padding-top: 56px;
-    height: 100px;
+    padding-bottom: 4px;
     margin: 0;
 }
 
@@ -182,7 +186,7 @@ aside {
     /*background-color: #388E3C;*/
     padding-top: 56px;
     margin: 0;
-    height: 100px;
+    padding-bottom: 4px;
 }
 
 .main-header .font-display1 {
@@ -190,13 +194,12 @@ aside {
     color: rgba(27, 94, 32, 0.87);
 }
 
-
 .details-header {
     border-top: 2px solid rgba(0, 0, 0, 0);
     /*background-color: #2E7D32;*/
     padding-top: 56px;
     margin: 0;
-    height: 100px;
+    padding-bottom: 4px;
 }
 
 .details-header .font-headline {
@@ -208,4 +211,38 @@ aside {
     margin-right: 32px;
     margin-top: 16px;
     margin-bottom: 16px;
+}
+
+.account-header {
+    display: flex;
+    flex: 1;
+}
+
+.account-header .caption {
+    flex: 1000 1000;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+.toolbar-button-group {
+    flex: 1 0;
+    margin-right: 4px;
+}
+
+.toolbar-button {
+    border: 0 none;
+    cursor: pointer;
+    background: transparent;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+
+}
+
+.account-header .toolbar-button {
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.toolbar-button:hover {
+    background-color: rgba(238, 238, 238, 0.24);
 }
