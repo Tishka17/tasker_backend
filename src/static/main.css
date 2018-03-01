@@ -109,6 +109,7 @@ aside {
     width: 100%;
     display: block;
     text-decoration: none;
+    box-sizing: border-box;
 }
 
 /*.list-item-1line {*/
@@ -146,6 +147,7 @@ aside {
     padding-right: 16px;
     height: 32px;
     line-height: 32px;
+    margin: 0;
 }
 
 * + .list-caption {
@@ -172,7 +174,7 @@ aside {
     background-position: center center;
     background-size: cover;
     background-color: #2E7D32;
-    padding-top: 56px;
+    padding-top: 64px;
     padding-bottom: 4px;
     margin: 0;
 }
@@ -244,5 +246,11 @@ aside {
 }
 
 .toolbar-button:hover {
-    background-color: rgba(238, 238, 238, 0.24);
+    background-color: rgba(238, 238, 238, 0.21);
+    border-radius: 18px;
+}
+.toolbar-button:active {
+    background-color: rgba(238, 238, 238, 0.35);
+    border-radius: 18px;
+    border: 0;
 }
