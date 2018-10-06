@@ -27,6 +27,13 @@ nav {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 1);
 }
 
+.elevation-button {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+.elevation-button:active {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
+}
+
 .elevation-toolbar {
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 1);
     margin-left: -1px;
@@ -126,12 +133,12 @@ aside {
     max-lines: 2;
 }
 
-.button, .list-item:hover {
+.button:hover, .list-item:hover {
     background-color: #EEEEEE;
     text-decoration: none;
 }
 
-.button, .list-item:active {
+.button:active, .list-item:active {
     background-color: #E0E0E0;
 }
 
@@ -253,4 +260,21 @@ aside {
     background-color: rgba(238, 238, 238, 0.35);
     border-radius: 18px;
     border: 0;
+}
+
+.button {
+    border: none;
+    background: #ffffff;
+    display: inline-block;
+    text-decoration: none;
+    margin: 4px;
+    border-radius: 2px;
+    padding: 4px;
+    box-sizing: border-box;
+    height: 36px;
+}
+
+.button img {
+    margin: 0;
+    padding: 0;
 }
