@@ -1,0 +1,129 @@
+
+.stickers > li {
+    position: relative;
+    max-width: 256px;
+    max-height: 256px;
+    width: 256px;
+    height: 256px;
+
+    margin: 8px 8px 32px 8px;
+    padding: 16px;
+    background-color: #ffc;
+    box-shadow: 0 4px 10px rgba(33, 33, 33, .4);
+    display: inline-block;
+    transition: transform .1s ease-in-out;
+    list-style-type: none;
+
+    border-bottom-right-radius: 60px 5px;
+    z-index: 10;
+
+    font-family: 'Bad Script', cursive;
+    font-size: 120%;
+    overflow: hidden;
+}
+
+.stickers > li .body {
+    padding-top: 0.25rem;
+    margin-bottom: 32px;
+    overflow: hidden;
+    height: calc(100% - 32px);
+}
+
+.stickers > li:nth-child(3n) {
+    transform: rotate(3deg);
+}
+
+.stickers > li:nth-child(3n+1) {
+    transform: rotate(-3deg);
+}
+
+.stickers > li:hover {
+    z-index: 100;
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 5px 12px rgba(33, 33, 33, .4);
+    transition: transform .1s ease-in-out;
+}
+
+.stickers > li.magenta {
+    background-color: #fdf;
+}
+
+.stickers > li.red {
+    background-color: #fdd;
+}
+
+.stickers > li.blue {
+    background-color: #ddf;
+}
+
+.stickers > li.green {
+    background-color: #dfd;
+}
+
+.stickers > li.black {
+    background-color: #000;
+    color: #fff;
+}
+
+.stickers > li .deadline {
+    position: absolute;
+    bottom: 4px;
+}
+
+.stickers > li .deadline {
+    font-style: normal;
+    border-radius: 1em 0 1em 0;
+    text-shadow: 1px 1px 1px #fff;
+    background-image: linear-gradient(
+            -100deg,
+            rgba(255, 250, 150, 0.15),
+            rgba(255, 250, 150, 0.8) 100%,
+            rgba(255, 250, 150, 0.25)
+    );
+}
+
+.stickers > li.magenta .deadline {
+    background-image: linear-gradient(
+            -100deg,
+            rgba(255, 150, 255, 0.15),
+            rgba(255, 150, 255, 0.8) 100%,
+            rgba(255, 150, 255, 0.25)
+    );
+}
+
+.stickers > li.red .deadline {
+    background-image: linear-gradient(
+            -100deg,
+            rgba(255, 180, 180, 0.15),
+            rgba(255, 180, 180, 0.8) 100%,
+            rgba(255, 180, 180, 0.25)
+    );
+}
+
+.stickers > li.blue .deadline {
+    background-image: linear-gradient(
+            -100deg,
+            rgba(180, 180, 255, 0.15),
+            rgba(180, 180, 255, 0.8) 100%,
+            rgba(180, 180, 255, 0.25)
+    );
+}
+
+.stickers > li.green .deadline {
+    background-image: linear-gradient(
+            -100deg,
+            rgba(160, 250, 160, 0.15),
+            rgba(160, 250, 160, 0.8) 100%,
+            rgba(160, 250, 160, 0.25)
+    );
+}
+
+.stickers > li.black .deadline {
+    text-shadow: 1px 1px 1px #000;
+    background-image: linear-gradient(
+            -100deg,
+            rgba(255, 250, 150, 0.15),
+            rgba(255, 250, 150, 0.4) 100%,
+            rgba(255, 250, 150, 0.25)
+    );
+}

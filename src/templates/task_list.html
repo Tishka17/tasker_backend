@@ -3,17 +3,28 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row  justify-content-md-center my-3">
-    <div class="list-group" style="width: 30rem;">
-        {% for task in tasks %}
-        <a href="/tasks/{{task.id}}" class="list-group-item list-group-item-action">
-            {{task.title}}<br/>
-            <small>{{task.deadline or ""}}</small>
-        </a>
-        {% endfor %}
+    <div class="row justify-content-md-center my-3">
+        <ul class="stickers">
+            {% for task in tasks %}
+                <li>
+                    <a href="/tasks/{{ task.id }}" class="list-group-item-action">
+                        <div class="body">
+                            {% if task.title %}
+                                <h3>{{ task.title }}</h3>
+                            {% endif %}
+                            {% if task.description %}
+                                <p>{{ task.description }}</p>
+                            {% endif %}
+                        </div>
+                        {% if task.deadline %}
+                            <div class="deadline">До: {{ task.deadline }}</div>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
-</div>
 
-{{ render_pagination(pagination) }}
+    {{ render_pagination(pagination) }}
 
 {% endblock %}
