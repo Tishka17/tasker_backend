@@ -1,12 +1,15 @@
 {% macro render_task_item(task) %}
 
-
-    <a href="{{ url_for("pages.get_task", task_id=task.id) }}" class="list-item-3lines font-body1 list-item">
-        {{ task.title }}
+    <li>
+        <a href="{{ url_for("pages.get_task", task_id=task.id) }}" class="body">
+            {% if task.title %}
+                <h3>{{ task.title }}</h3>
+            {% endif %}
+            <p>{{ task.description }}</p>
+        </a>
         {% if task.deadline %}
-            <div class="font-body2">Сделать до: {{ task.deadline }}</div>
+            <div class="deadline">Сделать до: {{ task.deadline }}</div>
         {% endif %}
-        <div class="font-secondary">{{ task.description }}</div>
-    </a>
 
+    </li>
 {% endmacro %}

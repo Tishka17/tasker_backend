@@ -9,10 +9,11 @@
     </div>
 
     <div class="list">
-
-        {% for task in tasks %}
-            {{ render_task_item(task) }}
-        {% endfor %}
+        <ul class="stickers">
+            {% for task in tasks %}
+                    {{ render_task_item(task) }}
+            {% endfor %}
+        </ul>
         {{ render_pagination(pagination) }}
     </div>
 
