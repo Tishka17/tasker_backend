@@ -13,6 +13,13 @@ def jinja2_filter_isodate(_, date):
         return ""
     return date.isoformat()
 
+@jinja2.contextfilter
+@blueprint.app_template_filter('humandate')
+def jinja2_filter_humandate(_, date):
+    if not date:
+        return ""
+    return date.strftime("%d %B %Y")
+
 
 @jinja2.contextfilter
 @blueprint.app_template_filter('enum')

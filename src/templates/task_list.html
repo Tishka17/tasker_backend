@@ -4,25 +4,23 @@
 {% block content %}
 
     <div class="row justify-content-md-center my-3">
-        <ul class="stickers">
+        <div class="stickerboard">
             {% for task in tasks %}
-                <li>
-                    <a href="/tasks/{{ task.id }}" class="list-group-item-action">
-                        <div class="body">
-                            {% if task.title %}
-                                <h3>{{ task.title }}</h3>
-                            {% endif %}
-                            {% if task.description %}
-                                <p>{{ task.description }}</p>
-                            {% endif %}
-                        </div>
-                        {% if task.deadline %}
-                            <div class="deadline">До: {{ task.deadline }}</div>
+                <a href="/tasks/{{ task.id }}" class="sticker">
+                    <div class="body">
+                        {% if task.title %}
+                            <h3>{{ task.title }}</h3>
                         {% endif %}
-                    </a>
-                </li>
+                        {% if task.description %}
+                            <p>{{ task.description }}</p>
+                        {% endif %}
+                    </div>
+                    {% if task.deadline %}
+                        <div class="deadline">До: {{ task.deadline|humandate }}</div>
+                    {% endif %}
+                </a>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 
     {{ render_pagination(pagination) }}

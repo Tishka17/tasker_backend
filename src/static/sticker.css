@@ -1,16 +1,21 @@
+.stickerboard {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
 
-.stickers > li {
-    position: relative;
+
+.sticker {
     max-width: 256px;
     max-height: 256px;
     width: 256px;
     height: 256px;
+    color: #000;
 
     margin: 8px 8px 32px 8px;
     padding: 16px;
     background-color: #ffc;
     box-shadow: 0 4px 10px rgba(33, 33, 33, .4);
-    display: inline-block;
     transition: transform .1s ease-in-out;
     list-style-type: none;
 
@@ -19,70 +24,81 @@
 
     font-family: 'Bad Script', cursive;
     font-size: 120%;
-    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
 }
 
-.stickers > li .body {
+.sticker .body {
+    flex-grow: 1;
     padding-top: 0.25rem;
-    margin-bottom: 32px;
     overflow: hidden;
-    height: calc(100% - 32px);
+    flex-shrink: 1;
+    min-height: 0;
+    flex-basis: 100%;
 }
 
-.stickers > li:nth-child(3n) {
+.sticker .deadline {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+    font-style: normal;
+    margin-bottom: -12px;
+    margin-left: -8px;
+    padding-left: 8px;
+}
+
+.sticker:nth-child(3n) {
     transform: rotate(3deg);
 }
 
-.stickers > li:nth-child(3n+1) {
+.sticker:nth-child(3n+1) {
     transform: rotate(-3deg);
 }
 
-.stickers > li:hover {
+.sticker:hover {
     z-index: 100;
     transform: rotate(0deg) scale(1.05);
     box-shadow: 0 5px 12px rgba(33, 33, 33, .4);
     transition: transform .1s ease-in-out;
+
+    color: #000;
+    text-decoration: none;
 }
 
-.stickers > li.magenta {
+.sticker.magenta {
     background-color: #fdf;
 }
 
-.stickers > li.red {
+.sticker.red {
     background-color: #fdd;
 }
 
-.stickers > li.blue {
+.sticker.blue {
     background-color: #ddf;
 }
 
-.stickers > li.green {
+.sticker.green {
     background-color: #dfd;
 }
 
-.stickers > li.black {
+.sticker.black {
     background-color: #000;
     color: #fff;
 }
 
-.stickers > li .deadline {
-    position: absolute;
-    bottom: 4px;
-}
-
-.stickers > li .deadline {
-    font-style: normal;
+.sticker .deadline {
     border-radius: 1em 0 1em 0;
     text-shadow: 1px 1px 1px #fff;
     background-image: linear-gradient(
             -100deg,
-            rgba(255, 250, 150, 0.15),
-            rgba(255, 250, 150, 0.8) 100%,
-            rgba(255, 250, 150, 0.25)
+            rgba(255, 250, 100, 0.15),
+            rgba(255, 250, 100, 0.8) 100%,
+            rgba(255, 250, 100, 0.25)
     );
 }
 
-.stickers > li.magenta .deadline {
+.sticker.magenta .deadline {
     background-image: linear-gradient(
             -100deg,
             rgba(255, 150, 255, 0.15),
@@ -91,7 +107,7 @@
     );
 }
 
-.stickers > li.red .deadline {
+.sticker.red .deadline {
     background-image: linear-gradient(
             -100deg,
             rgba(255, 180, 180, 0.15),
@@ -100,7 +116,7 @@
     );
 }
 
-.stickers > li.blue .deadline {
+.sticker.blue .deadline {
     background-image: linear-gradient(
             -100deg,
             rgba(180, 180, 255, 0.15),
@@ -109,7 +125,7 @@
     );
 }
 
-.stickers > li.green .deadline {
+.sticker.green .deadline {
     background-image: linear-gradient(
             -100deg,
             rgba(160, 250, 160, 0.15),
@@ -118,7 +134,7 @@
     );
 }
 
-.stickers > li.black .deadline {
+.sticker.black .deadline {
     text-shadow: 1px 1px 1px #000;
     background-image: linear-gradient(
             -100deg,
