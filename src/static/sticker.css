@@ -4,7 +4,6 @@
     flex-direction: row;
 }
 
-
 .sticker {
     max-width: 256px;
     max-height: 256px;
@@ -30,6 +29,7 @@
 }
 
 .sticker .body {
+    position: relative;
     flex-grow: 1;
     padding-top: 0.25rem;
     overflow: hidden;
@@ -79,7 +79,7 @@
 }
 
 .sticker.green {
-    background-color: #dfd;
+    background-color: #dfc;
 }
 
 .sticker.black {
@@ -142,4 +142,27 @@
             rgba(255, 250, 150, 0.4) 100%,
             rgba(255, 250, 150, 0.25)
     );
+}
+
+.sticker .body img.whole {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    opacity: 0.8;
+}
+
+.sticker:hover .body img.whole {
+    opacity: 1;
+}
+
+.sticker .body img.bg {
+    position: absolute;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    opacity: 0.2;
+    left: 0;
+    right: 0;
 }
